@@ -1,0 +1,129 @@
+<div class="container-fluid">
+  <div class="container">
+    <div class="cardd p-3">
+      <div class="row">
+        <div class="col-3 d-flex">
+          <input
+            type="text"
+            placeholder="Current Location"
+            class="location form-control"
+          />
+          <input
+            class="form-check-input"
+            type="radio"
+            (click)="returnToCurrentLocation()"
+            name="flexRadioDefault"
+            id="flexRadioDefault1"
+            checked
+          />
+        </div>
+        <div class="col-3">
+          <input
+            class="form-control"
+            type="text"
+            placeholder="Search for a location"
+            [(ngModel)]="searchQuery"
+            (keyup)="searchLocation()"
+          />
+        </div>
+        <div class="col-3">
+          <button class="btn btn-primary" (click)="createRoute()">
+            Calculate Route
+          </button>
+        </div>
+        <div class="col-3">
+          <button
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#RidePopUpModal"
+          >
+            Book Ride
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Map -->
+<section class="mapp">
+  <div
+    id="map"
+    class="map-container"
+    leaflet
+    (leafletMapReady)="onMapReady($event)"
+    (leafletClick)="mapClicked($event)"
+  ></div>
+</section>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="RidePopUpModal"
+  tabindex="-1"
+  aria-labelledby="RidePopUpModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="RidePopUpModalLabel">
+          Have a safe ride.
+        </h1>
+      </div>
+
+      <div class="modal-body">
+        <div class="two-wheeler">
+          <div class="row">
+            <div class="col-6">
+              <i class="fa-solid fa-motorcycle"></i>
+            </div>
+            <div class="col-6">
+              <p>Total Distance: {{ distanceInKilometersString }}</p>
+              <p>Total Price: {{ bikepriceInRupeesString }}</p>
+            </div>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <div class="three-wheeler">
+          <div class="row">
+            <div class="col-6">
+              <i class="fa-solid fa-caravan"></i>
+            </div>
+            <div class="col-6">
+              <p>Total Distance: {{ distanceInKilometersString }}</p>
+              <p>Total Price: {{ AutopriceInRupeesString }}</p>
+            </div>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <div class="four-wheeler">
+          <div class="row">
+            <div class="col-6">
+              <i class="fa-solid fa-car-side"></i>
+            </div>
+            <div class="col-6">
+              <p>Total Distance: {{ distanceInKilometersString }}</p>
+              <p>Total Price: {{ cabpriceInRupeesString }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button type="button" class="btn btn-primary">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
