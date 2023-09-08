@@ -12,6 +12,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { UserpageComponent } from './userpage/userpage.component';
 import { RiderpageComponent } from './riderpage/riderpage.component';
 import { AdminpageComponent } from './adminpage/adminpage.component';
+import { LoginModule } from './login/login.module';
 
 
 @NgModule({
@@ -20,14 +21,13 @@ import { AdminpageComponent } from './adminpage/adminpage.component';
     HeaderComponent,
     SidenavComponent,
     FooterComponent,
-    LoginComponent,
     UserpageComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    LeafletModule
+    LeafletModule, LoginModule
   ],
   providers: [],
   bootstrap: [AppComponent]

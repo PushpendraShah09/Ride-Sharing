@@ -1,0 +1,34 @@
+/* Basic styles for the side navigation */
+.sideMenu {
+  background-color: #333;
+  color: white;
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto; 
+}
+
+/* Responsive CSS */
+@media (min-width: 768px) {
+  /* On screens larger than 768px, make the side menu 25% of the container width */
+  .col-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+
+  .col {
+    flex: 0 0 75%;
+    max-width: 75%;
+  }
+}
+
+/* Additional styles for the side menu */
+.sideMenu p {
+  margin: 0;
+}
+
+/* Your chart styles can go here */
+.Chart {
+  padding: 20px;
+}
+
+/* Add any other styles you need for your chart */
