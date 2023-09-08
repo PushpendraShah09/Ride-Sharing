@@ -17,7 +17,13 @@ import { CommonModule } from '@angular/common';
 import { AdminpageModule } from './adminpage/adminpage.module';
 import { UserpageModule } from './userpage/userpage.module';
 import { RiderpageModule } from './riderpage/riderpage.module';
-
+import { NgxUiLoaderModule, NgxUiLoaderConfig, SPINNER } from 'ngx-ui-loader';
+const ngxUiLoaderConfig: NgxUiLoaderConfig = {
+  fgsColor: '#ffffff',
+  bgsSize: 40,
+  fgsType: SPINNER.chasingDots,
+  pbThickness: 5,
+};
 
 @NgModule({
   declarations: [
@@ -37,6 +43,7 @@ import { RiderpageModule } from './riderpage/riderpage.module';
     AdminpageModule,
     LoginModule,
     RiderpageModule,
+    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
 
 
   ],

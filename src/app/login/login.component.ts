@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
     public hs: HeroService,
     public router: Router,
     private service: CordysServiceService
-  ) {}
+  ) { }
   ngOnInit(): void {
     const sign_in_btn = document.querySelector('#sign-in-btn');
     const sign_up_btn = document.querySelector('#sign-up-btn');
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
       });
   }
 
-  
+
   UserData: any;
   UserRole: any;
   GetUserDetails() {
@@ -64,10 +64,13 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('userRole', this.UserRole);
       if (this.UserRole == 'RiderRS') {
         this.router.navigateByUrl('/riderpage');
+        this.hs.callToggle.next(this.UserRole);
       } else if (this.UserRole == 'userRS') {
         this.router.navigateByUrl('/userpage');
-      } else if(this.UserRole == 'AdimnRS') {
+        this.hs.callToggle.next(this.UserRole);
+      } else if (this.UserRole == 'AdimnRS') {
         this.router.navigateByUrl('/adminpage');
+        this.hs.callToggle.next(this.UserRole);
       }
     });
   }

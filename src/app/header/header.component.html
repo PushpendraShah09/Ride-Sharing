@@ -9,6 +9,7 @@
         (click)="toggle1()"
         [ngClass]="{ 'item-active': isValue == 1 }"
         class="item"
+
       >
         <a routerLink="/home">Home</a>
       </div>
@@ -17,7 +18,7 @@
         (click)="toggle2()"
         [ngClass]="{ 'item-active': isValue == 2 }"
         class="item"
-        *ngIf="userRole == 'RiderRS' || userRole == 'userRS'"
+        *ngIf="userRole == 'userRS' || userRole == 'RiderRS'"
       >
         <a>Rides</a>
       </div>
@@ -74,7 +75,7 @@
               <a routerLink="/home">Home</a>
             </div>
 
-            <div *ngIf="userRole == 'RiderRS' || userRole == 'userRS'" class="modal-line">
+            <div class="modal-line">
               <i class="fa-solid fa-circle-info"></i>
               <a href="">Rides</a>
             </div>
@@ -100,7 +101,6 @@
               (click)="Logout()"
               >Log out</a
             >
-          
           </div>
 
           <div class="mobile-modal-footer">

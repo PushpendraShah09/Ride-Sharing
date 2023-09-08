@@ -8,12 +8,26 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  constructor(public hs: HeroService, public router: Router) {}
-  userRole: any;
+
+
+  constructor(public hs: HeroService, public router: Router) {
+    debugger;
+
+  }
+  userRole: any = null;
 
   ngOnInit(): void {
-    this.userRole = localStorage.getItem('userRole');
     debugger;
+
+    this.hs.callToggle.subscribe((role) => {
+      console.log(role);
+      this.userRole = role;
+
+      debugger;
+    })
+    // this.userRole = localStorage.getItem('userRole');
+
+
   }
 
 
@@ -33,9 +47,10 @@ export class HeaderComponent implements OnInit {
   }
 
   Logout() {
-    localStorage.removeItem('userRole');
-    localStorage.clear();
-
+    // localStorage.removeItem('userRole');
+    // localStorage.clear();
+    debugger;
+    this.userRole = null;
     var c_a = document.cookie.split(';').map((cookie) => cookie.split('='));
     var c = 0;
     while (c < c_a.length) {
