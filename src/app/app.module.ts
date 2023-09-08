@@ -13,6 +13,10 @@ import { UserpageComponent } from './userpage/userpage.component';
 import { RiderpageComponent } from './riderpage/riderpage.component';
 import { AdminpageComponent } from './adminpage/adminpage.component';
 import { LoginModule } from './login/login.module';
+import { CommonModule } from '@angular/common';
+import { AdminpageModule } from './adminpage/adminpage.module';
+import { UserpageModule } from './userpage/userpage.module';
+import { RiderpageModule } from './riderpage/riderpage.module';
 
 
 @NgModule({
@@ -21,13 +25,20 @@ import { LoginModule } from './login/login.module';
     HeaderComponent,
     SidenavComponent,
     FooterComponent,
-    UserpageComponent,
+
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    LeafletModule, LoginModule
+    LeafletModule, LoginModule,
+    CommonModule,
+    AdminpageModule,
+    LoginModule,
+    RiderpageModule,
+
+
   ],
   providers: [],
   bootstrap: [AppComponent]

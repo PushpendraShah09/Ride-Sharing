@@ -2,22 +2,62 @@
   <div class="col-3">
     <div class="sideMenu">
       <ul class="nav flex-column">
-        <li class="nav-item">
-          <a class="nav-link">ABC</a>
+        <li (click)="toggle(1)" class="nav-item">
+          <a class="nav-link">City wise distribution of the rides</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link">DEF</a>
+        <li (click)="toggle(2)" class="nav-item">
+          <a class="nav-link">Vehicle category wise ride distribution</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link">GHI</a>
+        <li (click)="toggle(3)" class="nav-item">
+          <a class="nav-link"
+            >Best and worst rated drivers in each city with details</a
+          >
+        </li>
+        <li (click)="toggle(4)" class="nav-item">
+          <a class="nav-link"
+            >Rides with maximum and minimum fares in each city.</a
+          >
+        </li>
+        <li (click)="toggle(5)" class="nav-item">
+          <a class="nav-link"
+            >Cancelled ride distribution city wise in a duration.</a
+          >
         </li>
       </ul>
     </div>
   </div>
   <div class="col">
-    <div class="container border">
+    <div *ngIf="isValue == 1" class="container border">
       <div class="Chart p-4">
         <h5>City wise distribution of the rides</h5>
+        <hr class="homeTable-divider" />
+        <canvas id="myChart"></canvas>
+      </div>
+    </div>
+    <div *ngIf="isValue == 2" class="container border">
+      <div class="Chart p-4">
+        <h5>Vehicle category wise ride distribution</h5>
+        <hr class="homeTable-divider" />
+        <canvas id="myChart"></canvas>
+      </div>
+    </div>
+    <div *ngIf="isValue == 3" class="container border">
+      <div class="Chart p-4">
+        <h5>Best and worst rated drivers in each city with details</h5>
+        <hr class="homeTable-divider" />
+        <canvas id="myChart"></canvas>
+      </div>
+    </div>
+    <div *ngIf="isValue == 4" class="container border">
+      <div class="Chart p-4">
+        <h5>Rides with maximum and minimum fares in each city.</h5>
+        <hr class="homeTable-divider" />
+        <canvas id="myChart"></canvas>
+      </div>
+    </div>
+    <div *ngIf="isValue == 5" class="container border">
+      <div class="Chart p-4">
+        <h5>Cancelled ride distribution city wise in a duration.</h5>
         <hr class="homeTable-divider" />
         <canvas id="myChart"></canvas>
       </div>
