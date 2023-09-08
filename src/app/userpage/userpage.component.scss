@@ -3,11 +3,6 @@
   height: 100vh;
 }
 
-.container-fluid {
-  border: 1px solid #d1d1d1;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
 
 .location {
   border-radius: 5px 0 0 5px;
@@ -32,4 +27,28 @@
 .modal-body i{
   font-size: 50px;
 }
+
+.col-6 i{
+  font-size: 50px;
+}
+
+
+//containerr
+.containerr {
+  display: flex; 
+  width: 100%; 
+}
+
+.left {
+  flex: 30%; 
+  background-color: whitesmoke; 
+  padding: 20px; 
+}
+
+.right {
+  flex: 70%; 
+  background-color: #f0f0f0; 
+  padding: 20px; 
+}
+
 
