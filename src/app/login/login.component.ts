@@ -48,27 +48,27 @@ export class LoginComponent implements OnInit {
     $.cordys.authentication.sso
       .authenticate(this.data.user, this.data.pass)
       .done((resp: any) => {
-        // this.GetUserDetails();
+        this.GetUserDetails();
       });
   }
 
-  
-  // UserData: any;
-  // UserRole: any;
-  // GetUserDetails() {
-  //   this.service.GetUserDetails({ UserName: this.data.user }).then((resp) => {
-  //     console.log(resp);
-  //     this.UserData = this.hs.xmltojson(resp, 'Roles');
-  //     debugger;
-  //     this.UserRole = this.UserData[0].Role[5].text;
-  //     localStorage.setItem('userRole', this.UserRole);
-  //     if (this.UserRole == 'RiderRS') {
-  //       this.router.navigateByUrl('/riderpage');
-  //     } else if (this.UserRole == 'userRS') {
-  //       this.router.navigateByUrl('/userpage');
-  //     } else if(this.UserRole == 'AdimnRS') {
-  //       this.router.navigateByUrl('/adminpage');
-  //     }
-  //   });
-  // }
+
+  UserData: any;
+  UserRole: any;
+  GetUserDetails() {
+    this.service.GetUserDetails({ UserName: this.data.user }).then((resp) => {
+      console.log(resp);
+      this.UserData = this.hs.xmltojson(resp, 'Roles');
+      debugger;
+      this.UserRole = this.UserData[0].Role[5].text;
+      localStorage.setItem('userRole', this.UserRole);
+      if (this.UserRole == 'RiderRS') {
+        this.router.navigateByUrl('/riderpage');
+      } else if (this.UserRole == 'userRS') {
+        this.router.navigateByUrl('/userpage');
+      } else if(this.UserRole == 'AdimnRS') {
+        this.router.navigateByUrl('/adminpage');
+      }
+    });
+  }
 }
