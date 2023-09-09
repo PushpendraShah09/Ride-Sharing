@@ -29,7 +29,19 @@
   <div class="col">
     <div *ngIf="isValue == 1" class="container border">
       <div class="Chart p-4">
-        <h5>City wise distribution of the rides</h5>
+        <div class="justify-content-between d-flex is-align-items-center">
+          <div class="d-flex align-items-center">
+            <h5 class="mb-0">City wise distribution of the rides</h5>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-primary d-block">
+              <i class="bi bi-cloud-arrow-down-fill"></i>
+            </button>
+            <button class="btn btn-primary d-block">
+              <i class="bi bi-eye-fill"></i>
+            </button>
+          </div>
+        </div>
         <hr class="homeTable-divider" />
         <canvas id="myChart"></canvas>
       </div>
