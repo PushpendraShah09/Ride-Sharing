@@ -3,7 +3,7 @@ import { HeroService } from '../hero.service';
 import { Router } from '@angular/router';
 import { Chart } from 'chart.js/auto';
 import { CordysServiceService } from '../cordys-service.service';
-import { NgxPaginationModule } from 'ngx-pagination';
+
 @Component({
   selector: 'app-adminpage',
   templateUrl: './adminpage.component.html',
@@ -176,6 +176,68 @@ export class AdminpageComponent implements OnInit {
     return '★'.repeat(starCount) + '☆'.repeat(maxRating - starCount);
   }
 
+   // Download Birt
+
+   FileName: any;
+   arr: any;
+   base64: any;
+   GetReportForCitywisedistributionoftherides() {
+     const that = this;
+     debugger;
+     this.hs
+       .ajax('GetReport', 'http://schemas.cordys.com/BIRT/', {
+         ReportName: 'Citywisedistributionoftherides.rptdesign',
+         OutputFormat: 'pdf',
+         Embeddable: 'false',
+         OutputToFile: 'true',
+         EncodeFile: 'false',
+       })
+       .then((resp: any) => {
+         //console.log(resp.HyperLink);
+         //console.log(resp.PhysicalLink);
+ 
+         //this.AllUserHistory = this.hs.xmltojson(resp, 'GetReport');
+ 
+         this.FileName = resp.PhysicalLink.split('/');
+         this.FileName = this.FileName[4];
+         //console.log('File Name = ', this.FileName);
+         //console.log("AllUserHistory = ",resp.HyperLink)
+         debugger;
+         this.DownloadFileFromServer();
+       });
+   }
+ 
+   Path =
+     'C:\\OPENTEXT\\AppWorksPlatform\\defaultInst\\webroot\\organization\\trainingjulaug2022/birt/reports/reportFiles/';
+   DownloadFileFromServer() {
+     debugger;
+     this.hs
+       .ajax('DownloadFile', 'http://schemas.cordys.com/WSAppServerPackageRS', {
+         Fname: this.FileName,
+         Fpath: this.Path,
+       })
+       .then((resp: any) => {
+         this.arr = this.hs.xmltojson(resp, 'DownloadFile');
+         this.base64 = this.arr[0].DownloadFile;
+ 
+         const byteCharacters = atob(this.base64);
+         const byteNumbers = new Array(byteCharacters.length);
+         for (let i = 0; i < byteCharacters.length; i++) {
+           byteNumbers[i] = byteCharacters.charCodeAt(i);
+         }
+         const byteArray = new Uint8Array(byteNumbers);
+         const blob = new Blob([byteArray], {
+           type: 'application/octet-stream',
+         });
+         const url = window.URL.createObjectURL(blob);
+         const a = document.createElement('a');
+         a.href = url;
+         a.download = this.FileName;
+         a.click();
+         window.URL.revokeObjectURL(url);
+         debugger;
+       });
+   }
 
 }
 

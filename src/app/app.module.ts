@@ -40,6 +40,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     FormsModule,
     LeafletModule, LoginModule,
     CommonModule,
+    AdminpageModule,
     LoginModule,
     RiderpageModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
