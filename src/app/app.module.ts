@@ -43,6 +43,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     LoginModule,
     RiderpageModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+    AdminpageModule
 
   ],
   providers: [],

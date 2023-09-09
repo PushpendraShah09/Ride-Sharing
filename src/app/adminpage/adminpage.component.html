@@ -79,7 +79,7 @@
             <tr
               *ngFor="
                 let driver of driverRatingData
-                  | paginate : { itemsPerPage: 5, currentPage: p }
+
               "
             >
               <td>{{ driver.currentcity }}</td>
@@ -94,7 +94,7 @@
             </tr>
           </tbody>
         </table>
-        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
       </div>
     </div>
     <div *ngIf="isValue == 4" class="container border">

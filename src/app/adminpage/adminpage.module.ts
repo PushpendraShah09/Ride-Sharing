@@ -13,7 +13,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
   imports: [
     CommonModule,
     AdminpageRoutingModule,
-    NgxPaginationModule
   ]
 })
 export class AdminpageModule { }
