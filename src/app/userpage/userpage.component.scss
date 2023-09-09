@@ -3,6 +3,16 @@
   height: 100vh;
 }
 
+.parent {
+  position: relative;
+}
+
+.rad {
+  position: absolute;
+  top: 0;
+  right: 30px;
+  z-index: 1;
+}
 
 .location {
   border-radius: 5px 0 0 5px;
@@ -21,34 +31,30 @@
   background-color: #0056b3;
 }
 
-
 // modal
 
-.modal-body i{
+.modal-body i {
   font-size: 50px;
 }
 
-.col-6 i{
+.col-6 i {
   font-size: 50px;
 }
-
 
 //containerr
 .containerr {
-  display: flex; 
-  width: 100%; 
+  display: flex;
+  width: 100%;
 }
 
 .left {
-  flex: 30%; 
-  background-color: whitesmoke; 
-  padding: 20px; 
+  flex: 30%;
+  background-color: whitesmoke;
+  padding: 20px;
 }
 
 .right {
-  flex: 70%; 
-  background-color: #f0f0f0; 
-  padding: 20px; 
+  flex: 70%;
+  background-color: #f0f0f0;
+  padding: 20px;
 }
-
-
