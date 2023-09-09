@@ -14,16 +14,16 @@ export class HeaderComponent implements OnInit {
     debugger;
 
   }
-  userRole: any = null;
+  userRole: any;
 
   ngOnInit(): void {
     debugger;
-
+    this.userRole = localStorage.getItem('userRole');
+    debugger;
     this.hs.callToggle.subscribe((role) => {
       console.log(role);
       this.userRole = role;
 
-      debugger;
     })
     // this.userRole = localStorage.getItem('userRole');
 
@@ -45,12 +45,14 @@ export class HeaderComponent implements OnInit {
   toggle3() {
     this.isValue = 3;
   }
-
+  UserRole: any;
   Logout() {
     // localStorage.removeItem('userRole');
-    // localStorage.clear();
+    // localStorage.clear()
+    this.UserRole = '';
+    localStorage.setItem('userRole', this.UserRole);
+    this.hs.callToggle.next(this.UserRole);
     debugger;
-    this.userRole = null;
     var c_a = document.cookie.split(';').map((cookie) => cookie.split('='));
     var c = 0;
     while (c < c_a.length) {

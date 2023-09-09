@@ -2,18 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { HeroService } from '../hero.service';
 import { Router } from '@angular/router';
 import { Chart } from 'chart.js/auto';
-
+import { CordysServiceService } from '../cordys-service.service';
+import { NgxPaginationModule } from 'ngx-pagination';
 @Component({
   selector: 'app-adminpage',
   templateUrl: './adminpage.component.html',
   styleUrls: ['./adminpage.component.scss']
 })
 export class AdminpageComponent implements OnInit {
-  constructor(public hs: HeroService, public router: Router) { }
+  // Pagination properties
+  p: number = 1; // Number of items per page
+
+
+  constructor(public hs: HeroService, public router: Router, private service: CordysServiceService) { }
 
   chart: any = []
   ngOnInit(): void {
     this.City_wise_distribution_of_the_rides();
+    this.Best_and_worst_rated_drivers_in_each_city_with_details();
+
   }
 
   CityWiseRide: any = [{}];
@@ -150,10 +157,24 @@ export class AdminpageComponent implements OnInit {
     }
   }
 
+  driverRatingData: any
+  Best_and_worst_rated_drivers_in_each_city_with_details() {
+    this.service.Best_and_worst_rated_drivers_in_each_city_with_details({})
+      .then((resp: any) => {
+        console.log(resp);
+        debugger
+
+        this.driverRatingData = this.hs.xmltojson(resp, 'ride_transition_ridesharing');
 
 
+      });
+  }
 
-
+  getStarRating(rating: number): string {
+    const maxRating = 5;
+    const starCount = Math.round(rating); // Round the rating to the nearest integer
+    return '★'.repeat(starCount) + '☆'.repeat(maxRating - starCount);
+  }
 
 
 }

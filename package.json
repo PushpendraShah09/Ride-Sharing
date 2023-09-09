@@ -28,6 +28,7 @@
     "leaflet": "^1.9.4",
     "leaflet-control-geocoder": "^2.4.0",
     "leaflet-routing-machine": "^3.2.12",
+    "ngx-pagination": "^6.0.3",
     "ngx-ui-loader": "^13.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

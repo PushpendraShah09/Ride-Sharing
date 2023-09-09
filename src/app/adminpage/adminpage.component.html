@@ -3,25 +3,33 @@
     <div class="sideMenu">
       <ul class="nav flex-column">
         <li (click)="toggle(1)" class="nav-item">
-          <a class="nav-link">City wise distribution of the rides</a>
+          <a class="nav-link">
+            <span class="icon"><i class="bi bi-geo-alt"></i></span> Citywise
+            Rides
+          </a>
         </li>
         <li (click)="toggle(2)" class="nav-item">
-          <a class="nav-link">Vehicle category wise ride distribution</a>
+          <a class="nav-link">
+            <span class="icon"><i class="bi bi-briefcase"></i></span>
+            Categorywise Rides
+          </a>
         </li>
         <li (click)="toggle(3)" class="nav-item">
-          <a class="nav-link"
-            >Best and worst rated drivers in each city with details</a
-          >
+          <a class="nav-link">
+            <span class="icon"><i class="bi bi-star"></i></span> Drivers Rating
+          </a>
         </li>
         <li (click)="toggle(4)" class="nav-item">
-          <a class="nav-link"
-            >Rides with maximum and minimum fares in each city.</a
-          >
+          <a class="nav-link">
+            <span class="icon"><i class="bi bi-currency-dollar"></i></span>
+            Farewise Distribution
+          </a>
         </li>
         <li (click)="toggle(5)" class="nav-item">
-          <a class="nav-link"
-            >Cancelled ride distribution city wise in a duration.</a
-          >
+          <a class="nav-link">
+            <span class="icon"><i class="bi bi-x-circle"></i></span> Rides
+            Cancellation
+          </a>
         </li>
       </ul>
     </div>
@@ -57,7 +65,36 @@
       <div class="Chart p-4">
         <h5>Best and worst rated drivers in each city with details</h5>
         <hr class="homeTable-divider" />
-        <canvas id="myChart"></canvas>
+        <table class="table table-bordered table-hover table-striped">
+          <thead style="background-color: #343a40; color: white">
+            <tr>
+              <th scope="col">Current City</th>
+              <th scope="col">Best Rated Driver Name</th>
+              <th scope="col">Best Driver Avg Rating</th>
+              <th scope="col">Worst Rated Driver Name</th>
+              <th scope="col">Worst Driver Avg Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let driver of driverRatingData
+                  | paginate : { itemsPerPage: 5, currentPage: p }
+              "
+            >
+              <td>{{ driver.currentcity }}</td>
+              <td>{{ driver.best_rated_driver_name }}</td>
+              <td
+                [innerHTML]="getStarRating(driver.best_driver_avg_rating)"
+              ></td>
+              <td>{{ driver.worst_rated_driver_name }}</td>
+              <td
+                [innerHTML]="getStarRating(driver.worst_driver_avg_rating)"
+              ></td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
       </div>
     </div>
     <div *ngIf="isValue == 4" class="container border">

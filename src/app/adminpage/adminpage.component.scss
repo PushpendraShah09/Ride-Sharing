@@ -32,4 +32,18 @@
   padding: 20px;
 }
 
-/* Add any other styles you need for your chart */
+/* Add padding and background color on hover */
+.nav-item:hover {
+  background-color: #f8f9fa; /* Change this to your desired hover background color */
+  border-radius: 8px; /* Add rounded corners on hover */
+}
+
+/* Add space between the nav-links */
+.nav-item {
+  margin-bottom: 10px; /* Adjust the value to control the space between nav-links */
+}
+
+/* Style the icon */
+.nav-link .icon {
+  margin-right: 10px; /* Adjust the value to control the space between the icon and text */
+}
