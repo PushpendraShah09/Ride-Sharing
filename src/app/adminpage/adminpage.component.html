@@ -82,7 +82,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let driver of driverRatingData">
+            <tr
+              *ngFor="
+                let driver of driverRatingData
+
+              "
+            >
               <td>{{ driver.currentcity }}</td>
               <td>{{ driver.best_rated_driver_name }}</td>
               <td
