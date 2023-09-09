@@ -1,0 +1,49 @@
+/* Basic styles for the side navigation */
+.sideMenu {
+  background-color: #101010;
+  color: white;
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+
+}
+
+/* Responsive CSS */
+@media (min-width: 768px) {
+  /* On screens larger than 768px, make the side menu 25% of the container width */
+  .col-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+
+  .col {
+    flex: 0 0 75%;
+    max-width: 75%;
+  }
+}
+
+/* Additional styles for the side menu */
+.sideMenu p {
+  margin: 0;
+}
+
+/* Your chart styles can go here */
+.Chart {
+  padding: 20px;
+}
+
+/* Add padding and background color on hover */
+.nav-item:hover {
+  background-color: #f8f9fa; /* Change this to your desired hover background color */
+  border-radius: 8px; /* Add rounded corners on hover */
+}
+
+/* Add space between the nav-links */
+.nav-item {
+  margin-bottom: 10px; /* Adjust the value to control the space between nav-links */
+}
+
+/* Style the icon */
+.nav-link .icon {
+  margin-right: 10px; /* Adjust the value to control the space between the icon and text */
+}

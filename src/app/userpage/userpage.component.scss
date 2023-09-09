@@ -1,0 +1,54 @@
+.map-container {
+  width: 100%;
+  height: 100vh;
+}
+
+
+.location {
+  border-radius: 5px 0 0 5px;
+}
+
+.form-check-input {
+  margin-top: 10px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+
+// modal
+
+.modal-body i{
+  font-size: 50px;
+}
+
+.col-6 i{
+  font-size: 50px;
+}
+
+
+//containerr
+.containerr {
+  display: flex; 
+  width: 100%; 
+}
+
+.left {
+  flex: 30%; 
+  background-color: whitesmoke; 
+  padding: 20px; 
+}
+
+.right {
+  flex: 70%; 
+  background-color: #f0f0f0; 
+  padding: 20px; 
+}
+
+

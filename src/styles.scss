@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~leaflet/dist/leaflet.css";
+@import '~bootstrap-icons/font/bootstrap-icons.css';
+body{
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+}
+
+
+/* For hiding the leaflet routing container from map  */
+div.leaflet-routing-alternatives-container {
+    display: none !important;
+  }
+
+  .leaflet-routing-container {
+    display: none;
+  }
