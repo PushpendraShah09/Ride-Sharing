@@ -15,6 +15,15 @@
           <a routerLink="/home">Home</a>
         </div>
 
+        <div class="navb-items d-flex">
+          <div
+            (click)="toggle4()"
+            [ngClass]="{ 'item-active': isValue == 4 }"
+            class="item"
+          >
+            <a routerLink="/home">Book Ride</a>
+          </div>
+
         <div
           (click)="toggle2()"
           [ngClass]="{ 'item-active': isValue == 2 }"

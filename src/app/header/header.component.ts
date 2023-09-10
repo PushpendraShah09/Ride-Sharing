@@ -44,6 +44,10 @@ export class HeaderComponent implements OnInit {
   toggle3() {
     this.isValue = 3;
   }
+
+  toggle4() {
+    this.isValue = 4;
+  }
   UserRole: any;
   Logout() {
     // localStorage.removeItem('userRole');

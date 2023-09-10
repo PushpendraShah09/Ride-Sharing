@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Chart } from 'chart.js/auto';
 import { CordysServiceService } from '../cordys-service.service';
 
+
 @Component({
   selector: 'app-adminpage',
   templateUrl: './adminpage.component.html',
@@ -15,6 +16,7 @@ export class AdminpageComponent implements OnInit {
 
 
   constructor(public hs: HeroService, public router: Router, private service: CordysServiceService) { }
+
 
   chart: any = []
   ngOnInit(): void {
@@ -136,6 +138,7 @@ export class AdminpageComponent implements OnInit {
       },
     });
   }
+
   isValue: number = 1
   toggle(val: any) {
     this.isValue = val
@@ -159,6 +162,12 @@ export class AdminpageComponent implements OnInit {
       this.Cancel = [];
       this.Rides_with_maximum_and_minimum_fares_in_each_city()
 
+    }
+    if (this.isValue == 6) {
+      this.GetUser_master_ridesharingObjects()
+    }
+    if (this.isValue == 7) {
+      this.GetRider_master_ridesharingObjects()
     }
   }
 
@@ -391,6 +400,51 @@ this.hs
    this.DownloadFileFromServer();
  });
 }
+
+/* Table For User and Rider details */
+UserDetails: any;
+
+GetUser_master_ridesharingObjects() {
+  debugger;
+  this.hs
+    .ajax('GetUser_master_ridesharingObjects', 'http://schemas.cordys.com/WSAppServerPackageRS', {
+      fromId: '1',
+      toId: '99999'
+    })
+    .then((resp: any) => {
+      this.UserDetails = this.hs.xmltojson(
+        resp,
+        'user_master_ridesharing'
+        );
+        console.log(
+          'Getuserdetails =>',
+          this.UserDetails
+        );
+    });
+}
+
+
+RiderDetails: any;
+
+GetRider_master_ridesharingObjects() {
+  debugger;
+  this.hs
+    .ajax('GetRider_master_ridesharingObjects', 'http://schemas.cordys.com/WSAppServerPackageRS', {
+      fromId: '1',
+      toId: '99999'
+    })
+    .then((resp: any) => {
+      this.RiderDetails = this.hs.xmltojson(
+        resp,
+        'rider_master_ridesharing'
+        );
+        console.log(
+          'GetRiderdetails =>',
+          this.UserDetails
+        );
+    });
+}
+
 
 }
 

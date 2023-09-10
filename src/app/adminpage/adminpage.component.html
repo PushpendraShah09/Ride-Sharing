@@ -31,6 +31,18 @@
             Cancellation
           </a>
         </li>
+        <li (click)="toggle(6)" class="nav-item">
+          <a class="nav-link">
+            <span class="icon"><i class="bi bi-person-fill"></i></span> User 
+            Details
+          </a>
+        </li>
+        <li (click)="toggle(7)" class="nav-item">
+          <a class="nav-link">
+            <span class="icon"><i class="bi bi-taxi-front-fill"></i></span> Rider 
+            Details
+          </a>
+        </li>
       </ul>
     </div>
   </div>
@@ -192,6 +204,80 @@
         <hr class="homeTable-divider" />
         <canvas id="myChart"></canvas>
       </div>
+    </div>
+
+    <div *ngIf="isValue == 6" class="container border">
+      <div class="Chart p-4">
+        <div class="justify-content-between d-flex is-align-items-center">
+          <div class="d-flex align-items-center">
+            <h5 class="mb-0">
+              User details 
+            </h5>
+          </div>
+        </div>
+        <hr class="homeTable-divider" />
+        <table class="table table-bordered table-hover table-striped">
+          <thead style="background-color: #343a40; color: white">
+            <tr>
+              <th scope="col">User ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">E-Mail</th>
+              <th scope="col">Mobile No.</th>
+              <th scope="col">Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let User of UserDetails">
+              <td>{{ User.id }}</td>
+              <td>{{ User.name }}</td>
+              <td>{{ User.email }}</td>
+              <td>{{ User.mobileno }}</td>
+              <td>{{ User.role }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
+    </div>
+
+    <div *ngIf="isValue == 7" class="container border">
+      <div class="Chart p-4">
+        <div class="justify-content-between d-flex is-align-items-center">
+          <div class="d-flex align-items-center">
+            <h5 class="mb-0">
+              User details 
+            </h5>
+          </div>
+        </div>
+        <hr class="homeTable-divider" />
+        <table class="table table-bordered table-hover table-striped">
+          <thead style="background-color: #343a40; color: white">
+            <tr>
+              <th scope="col">User ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Age</th>
+              <th scope="col">E-Mail</th>
+              <th scope="col">Mobile No.</th>
+              <th scope="col">Role</th>
+              <th scope="col">City</th>
+              <th scope="col">State</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let Rider of RiderDetails">
+              <td>{{ Rider.id }}</td>
+              <td>{{ Rider.name }}</td>
+              <td>{{ Rider.age }}</td>
+              <td>{{ Rider.email }}</td>
+              <td>{{ Rider.mobileno }}</td>
+              <td>{{ Rider.role }}</td>
+              <td>{{ Rider.city }}</td>
+              <td>{{ Rider.state }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
     </div>
   </div>
 </div>

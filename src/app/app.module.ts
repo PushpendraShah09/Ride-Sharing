@@ -20,6 +20,8 @@ import { RiderpageModule } from './riderpage/riderpage.module';
 import { NgxUiLoaderModule, NgxUiLoaderConfig, SPINNER } from 'ngx-ui-loader';
 import { HttpClientModule } from '@angular/common/http';
 import { HistoryComponent } from './history/history.component';
+import { DataTablesModule } from 'angular-datatables';
+
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   fgsColor: '#ffffff',
   bgsSize: 40,
@@ -35,7 +37,6 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     FooterComponent,
     HistoryComponent,
 
-
   ],
   imports: [
     BrowserModule,
@@ -48,8 +49,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     RiderpageModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     AdminpageModule,
-    HttpClientModule
-
+    HttpClientModule,
+    DataTablesModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
