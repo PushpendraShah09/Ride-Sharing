@@ -22,7 +22,6 @@ a:hover {
   padding: 0 60px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
 @media (max-width: 992px) {
@@ -37,15 +36,14 @@ a:hover {
 }
 
 .navbarr .navb-items {
-  display: flex;
   align-items: center;
-  justify-content: flex-end;
+
   // letter-spacing: 3px;
 }
 
 .navbarr .item {
   text-align: center;
-  margin-inline: 5%;
+  margin-right: 5%;
   font-size: 20px;
   letter-spacing: 3px;
   color: #ffffff;
