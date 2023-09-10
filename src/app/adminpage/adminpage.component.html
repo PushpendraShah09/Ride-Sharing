@@ -43,7 +43,10 @@
             <h5 class="mb-0">City wise distribution of the rides</h5>
           </div>
           <div class="d-flex gap-2">
-            <button class="btn btn-primary d-block">
+            <button
+              class="btn btn-primary d-block"
+              (click)="GetReportForCitywisedistributionoftheridesInXLS()"
+            >
               <i class="bi bi-file-excel-fill"></i>
             </button>
             <button
@@ -69,7 +72,10 @@
             <h5 class="mb-0">Vehicle category wise ride distribution</h5>
           </div>
           <div class="d-flex gap-2">
-            <button class="btn btn-primary d-block">
+            <button
+              class="btn btn-primary d-block"
+              (click)="GetReportForVehiclecategorywiseridedistributionInXLS()"
+            >
               <i class="bi bi-file-excel-fill"></i>
             </button>
             <button
@@ -97,7 +103,12 @@
             </h5>
           </div>
           <div class="d-flex gap-2">
-            <button class="btn btn-primary d-block">
+            <button
+              class="btn btn-primary d-block"
+              (click)="
+                GetReportForBestandworstrateddriversineachcitywithdetailsInXLS()
+              "
+            >
               <i class="bi bi-file-excel-fill"></i>
             </button>
             <button
@@ -151,7 +162,12 @@
             </h5>
           </div>
           <div class="d-flex gap-2">
-            <button class="btn btn-primary d-block">
+            <button
+              class="btn btn-primary d-block"
+              (click)="
+                GetReportForRideswithmaximumandminimumfaresineachcityInXLS()
+              "
+            >
               <i class="bi bi-file-excel-fill"></i>
             </button>
             <button

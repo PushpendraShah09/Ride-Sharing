@@ -181,8 +181,42 @@ export class AdminpageComponent implements OnInit {
     return '★'.repeat(starCount) + '☆'.repeat(maxRating - starCount);
   }
 
+// Download From Server
+Path =
+'C:\\OPENTEXT\\AppWorksPlatform\\defaultInst\\webroot\\organization\\trainingjulaug2022/birt/reports/reportFiles/';
+DownloadFileFromServer() {
+debugger;
+this.hs
+  .ajax('DownloadFile', 'http://schemas.cordys.com/WSAppServerPackageRS', {
+    Fname: this.FileName,
+    Fpath: this.Path,
+  })
+  .then((resp: any) => {
+    this.arr = this.hs.xmltojson(resp, 'DownloadFile');
+    this.base64 = this.arr[0].DownloadFile;
 
-// Download Birt for City wise distribution of the rides
+    const byteCharacters = atob(this.base64);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], {
+      type: 'application/octet-stream',
+    });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = this.FileName;
+    a.click();
+    window.URL.revokeObjectURL(url);
+    debugger;
+  });
+}
+
+/* Birt File Download From Server In PDF Format */
+
+// Download Birt for City wise distribution of the rides in pdf
    FileName: any;
    arr: any;
    base64: any;
@@ -207,41 +241,7 @@ export class AdminpageComponent implements OnInit {
    }
 
 
-// Download From Server
-   Path =
-     'C:\\OPENTEXT\\AppWorksPlatform\\defaultInst\\webroot\\organization\\trainingjulaug2022/birt/reports/reportFiles/';
-   DownloadFileFromServer() {
-     debugger;
-     this.hs
-       .ajax('DownloadFile', 'http://schemas.cordys.com/WSAppServerPackageRS', {
-         Fname: this.FileName,
-         Fpath: this.Path,
-       })
-       .then((resp: any) => {
-         this.arr = this.hs.xmltojson(resp, 'DownloadFile');
-         this.base64 = this.arr[0].DownloadFile;
- 
-         const byteCharacters = atob(this.base64);
-         const byteNumbers = new Array(byteCharacters.length);
-         for (let i = 0; i < byteCharacters.length; i++) {
-           byteNumbers[i] = byteCharacters.charCodeAt(i);
-         }
-         const byteArray = new Uint8Array(byteNumbers);
-         const blob = new Blob([byteArray], {
-           type: 'application/octet-stream',
-         });
-         const url = window.URL.createObjectURL(blob);
-         const a = document.createElement('a');
-         a.href = url;
-         a.download = this.FileName;
-         a.click();
-         window.URL.revokeObjectURL(url);
-         debugger;
-       });
-   }
-
-
-// Download Birt for Vehicle category wise ride distribution
+// Download Birt for Vehicle category wise ride distribution  in pdf
 GetReportForVehiclecategorywiseridedistribution() {
   const that = this;
   debugger;
@@ -262,8 +262,7 @@ GetReportForVehiclecategorywiseridedistribution() {
     });
 }
 
-
-// Download Birt for Rides with maximum and minimum fares in each city 
+// Download Birt for Rides with maximum and minimum fares in each city in pdf
 GetReportForRideswithmaximumandminimumfaresineachcity() {
   const that = this;
   debugger;
@@ -284,7 +283,7 @@ GetReportForRideswithmaximumandminimumfaresineachcity() {
     });
 }
 
-// Download Birt for Best and worst rated drivers in each city with details
+// Download Birt for Best and worst rated drivers in each city with details in pdf
 GetReportForBestandworstrateddriversineachcitywithdetails() {
   const that = this;
   debugger;
@@ -303,6 +302,94 @@ GetReportForBestandworstrateddriversineachcitywithdetails() {
       debugger;
       this.DownloadFileFromServer();
     });
+}
+
+
+/* Birt File Download From Server In XLS Format */
+
+// Download Birt for City wise distribution of the rides in XLS
+GetReportForCitywisedistributionoftheridesInXLS() {
+  const that = this;
+  debugger;
+  this.hs
+    .ajax('GetReport', 'http://schemas.cordys.com/BIRT/', {
+      ReportName: 'Citywisedistributionoftherides.rptdesign',
+      OutputFormat: 'xls',
+      Embeddable: 'false',
+      OutputToFile: 'true',
+      EncodeFile: 'false',
+    })
+    .then((resp: any) => {
+      this.FileName = resp.PhysicalLink.split('/');
+      this.FileName = this.FileName[4];
+     
+      debugger;
+      this.DownloadFileFromServer();
+    });
+}
+
+
+// Download Birt for Vehicle category wise ride distribution in XLS
+GetReportForVehiclecategorywiseridedistributionInXLS() {
+const that = this;
+debugger;
+this.hs
+ .ajax('GetReport', 'http://schemas.cordys.com/BIRT/', {
+   ReportName: 'Vehiclecategorywiseridedistribution.rptdesign',
+   OutputFormat: 'xls',
+   Embeddable: 'false',
+   OutputToFile: 'true',
+   EncodeFile: 'false',
+ })
+ .then((resp: any) => {
+   this.FileName = resp.PhysicalLink.split('/');
+   this.FileName = this.FileName[4];
+  
+   debugger;
+   this.DownloadFileFromServer();
+ });
+}
+
+// Download Birt for Rides with maximum and minimum fares in each city in XLS
+GetReportForRideswithmaximumandminimumfaresineachcityInXLS() {
+const that = this;
+debugger;
+this.hs
+ .ajax('GetReport', 'http://schemas.cordys.com/BIRT/', {
+   ReportName: 'Rideswithmaximumandminimumfaresineachcity.rptdesign',
+   OutputFormat: 'xls',
+   Embeddable: 'false',
+   OutputToFile: 'true',
+   EncodeFile: 'false',
+ })
+ .then((resp: any) => {
+   this.FileName = resp.PhysicalLink.split('/');
+   this.FileName = this.FileName[4];
+  
+   debugger;
+   this.DownloadFileFromServer();
+ });
+}
+
+// Download Birt for Best and worst rated drivers in each city with details in XLS
+GetReportForBestandworstrateddriversineachcitywithdetailsInXLS() {
+const that = this;
+debugger;
+this.hs
+ .ajax('GetReport', 'http://schemas.cordys.com/BIRT/', {
+   ReportName: 'Bestandworstrateddriversineachcitywithdetails..rptdesign',
+   OutputFormat: 'xls',
+   Embeddable: 'false',
+   OutputToFile: 'true',
+   EncodeFile: 'false',
+ })
+ .then((resp: any) => {
+   this.FileName = resp.PhysicalLink.split('/');
+   this.FileName = this.FileName[4];
+  
+   debugger;
+   this.DownloadFileFromServer();
+ });
 }
 
 }

@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
     public hs: HeroService,
     public router: Router,
     private service: CordysServiceService
-  ) { }
+  ) {}
   ngOnInit(): void {
     const sign_in_btn = document.querySelector('#sign-in-btn');
     const sign_up_btn = document.querySelector('#sign-up-btn');
@@ -52,7 +52,6 @@ export class LoginComponent implements OnInit {
       });
   }
 
-
   UserData: any;
   UserRole: any;
   GetUserDetails() {
@@ -73,5 +72,47 @@ export class LoginComponent implements OnInit {
         this.hs.callToggle.next(this.UserRole);
       }
     });
+  }
+
+  CreateUserInOrg(NewUser: any) {
+    debugger;
+    const that = this;
+
+    $.cordys.authentication.sso
+      .authenticate('sysadmin', 'sys@admin')
+      .done((resp: any) => {});
+
+    setTimeout(() => {
+      that.CreateUser();
+    }, 3000);
+  }
+
+  CreateUser() {
+    debugger;
+    this.hs
+      .ajax(
+        'CreateUserInOrganization',
+        'http://schemas.cordys.com/UserManagement/1.0/Organization',
+        {
+          User: {
+            UserName: this.NewUser.username,
+            Description: this.NewUser.username,
+            Credentials: {
+              UserIDPassword: {
+                UserID: this.NewUser.username,
+                Password: this.NewUser.password,
+              },
+            },
+
+            Roles: {
+              Role: this.NewUser.role,
+            },
+          },
+        }
+      )
+      .then((resp) => {
+        console.log(resp);
+        // alert('User_User');
+      });
   }
 }

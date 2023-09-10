@@ -30,6 +30,7 @@
             type="submit"
             value="Login"
             class="btn solid"
+            name="Login"
           />
         </form>
 
@@ -42,6 +43,7 @@
               [(ngModel)]="NewUser.username"
               type="text"
               placeholder="Username"
+              name="UserName"
             />
           </div>
 
@@ -51,6 +53,7 @@
               [(ngModel)]="NewUser.email"
               type="email"
               placeholder="Email"
+              name="Email"
             />
           </div>
 
@@ -60,6 +63,7 @@
               [(ngModel)]="NewUser.password"
               type="password"
               placeholder="Password"
+              name="Password"
             />
           </div>
           <form style="flex-direction: row">
@@ -68,7 +72,7 @@
                 [(ngModel)]="NewUser.role"
                 type="radio"
                 name="userType"
-                value="user"
+                value="userRS"
               />
               User
             </label>
@@ -77,12 +81,18 @@
                 [(ngModel)]="NewUser.role"
                 type="radio"
                 name="userType"
-                value="rider"
+                value="RiderRS"
               />
               Rider
             </label>
           </form>
-          <input type="submit" class="btn" value="Sign up" />
+          <input
+            type="submit"
+            class="btn"
+            value="Sign up"
+            (click)="CreateUserInOrg(NewUser)"
+            name="SignUp"
+          />
         </form>
       </div>
     </div>
