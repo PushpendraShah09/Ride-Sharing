@@ -23,14 +23,14 @@ export class AdminpageComponent implements OnInit {
 
   }
 
+  array :any;
   CityWiseRide: any = [{}];
   city: any = [];
   Complete: any = [];
   Cancel: any = [];
-
   City_wise_distribution_of_the_rides() {
     const that = this;
-
+    this.array = ["Complete","Cancel" ]
     debugger;
     this.hs
       .ajax(
@@ -53,8 +53,12 @@ export class AdminpageComponent implements OnInit {
         this.createChart();
       });
   }
+
   Vehicle_category_wise_ride_distribution() {
     const that = this;
+
+    this.array = ["Complete","Cancel" ]
+
     debugger;
     this.hs
       .ajax(
@@ -75,9 +79,10 @@ export class AdminpageComponent implements OnInit {
         this.createChart();
       });
   }
+
   Rides_with_maximum_and_minimum_fares_in_each_city() {
     const that = this;
-
+    this.array = ["Max Fare","Min Fare" ]
     this.hs
       .ajax(
         'Rides_with_maximum_and_minimum_fares_in_each_city',
@@ -109,12 +114,12 @@ export class AdminpageComponent implements OnInit {
         labels: this.city,
         datasets: [
           {
-            label: 'Complete',
+            label: this.array[0],
             data: this.Complete,
             backgroundColor: 'blue',
           },
           {
-            label: 'Cancel',
+            label: this.array[1],
             data: this.Cancel,
             backgroundColor: 'limegreen',
           },
@@ -176,8 +181,8 @@ export class AdminpageComponent implements OnInit {
     return '★'.repeat(starCount) + '☆'.repeat(maxRating - starCount);
   }
 
-   // Download Birt
 
+// Download Birt for City wise distribution of the rides
    FileName: any;
    arr: any;
    base64: any;
@@ -193,20 +198,16 @@ export class AdminpageComponent implements OnInit {
          EncodeFile: 'false',
        })
        .then((resp: any) => {
-         //console.log(resp.HyperLink);
-         //console.log(resp.PhysicalLink);
- 
-         //this.AllUserHistory = this.hs.xmltojson(resp, 'GetReport');
- 
          this.FileName = resp.PhysicalLink.split('/');
          this.FileName = this.FileName[4];
-         //console.log('File Name = ', this.FileName);
-         //console.log("AllUserHistory = ",resp.HyperLink)
+        
          debugger;
          this.DownloadFileFromServer();
        });
    }
- 
+
+
+// Download From Server
    Path =
      'C:\\OPENTEXT\\AppWorksPlatform\\defaultInst\\webroot\\organization\\trainingjulaug2022/birt/reports/reportFiles/';
    DownloadFileFromServer() {
@@ -238,6 +239,71 @@ export class AdminpageComponent implements OnInit {
          debugger;
        });
    }
+
+
+// Download Birt for Vehicle category wise ride distribution
+GetReportForVehiclecategorywiseridedistribution() {
+  const that = this;
+  debugger;
+  this.hs
+    .ajax('GetReport', 'http://schemas.cordys.com/BIRT/', {
+      ReportName: 'Vehiclecategorywiseridedistribution.rptdesign',
+      OutputFormat: 'pdf',
+      Embeddable: 'false',
+      OutputToFile: 'true',
+      EncodeFile: 'false',
+    })
+    .then((resp: any) => {
+      this.FileName = resp.PhysicalLink.split('/');
+      this.FileName = this.FileName[4];
+     
+      debugger;
+      this.DownloadFileFromServer();
+    });
+}
+
+
+// Download Birt for Rides with maximum and minimum fares in each city 
+GetReportForRideswithmaximumandminimumfaresineachcity() {
+  const that = this;
+  debugger;
+  this.hs
+    .ajax('GetReport', 'http://schemas.cordys.com/BIRT/', {
+      ReportName: 'Rideswithmaximumandminimumfaresineachcity.rptdesign',
+      OutputFormat: 'pdf',
+      Embeddable: 'false',
+      OutputToFile: 'true',
+      EncodeFile: 'false',
+    })
+    .then((resp: any) => {
+      this.FileName = resp.PhysicalLink.split('/');
+      this.FileName = this.FileName[4];
+     
+      debugger;
+      this.DownloadFileFromServer();
+    });
+}
+
+// Download Birt for Best and worst rated drivers in each city with details
+GetReportForBestandworstrateddriversineachcitywithdetails() {
+  const that = this;
+  debugger;
+  this.hs
+    .ajax('GetReport', 'http://schemas.cordys.com/BIRT/', {
+      ReportName: 'Bestandworstrateddriversineachcitywithdetails..rptdesign',
+      OutputFormat: 'pdf',
+      Embeddable: 'false',
+      OutputToFile: 'true',
+      EncodeFile: 'false',
+    })
+    .then((resp: any) => {
+      this.FileName = resp.PhysicalLink.split('/');
+      this.FileName = this.FileName[4];
+     
+      debugger;
+      this.DownloadFileFromServer();
+    });
+}
 
 }
 

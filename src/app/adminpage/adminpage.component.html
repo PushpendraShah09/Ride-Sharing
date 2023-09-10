@@ -34,6 +34,7 @@
       </ul>
     </div>
   </div>
+
   <div class="col">
     <div *ngIf="isValue == 1" class="container border">
       <div class="Chart p-4">
@@ -60,16 +61,58 @@
         <canvas id="myChart"></canvas>
       </div>
     </div>
+
     <div *ngIf="isValue == 2" class="container border">
       <div class="Chart p-4">
-        <h5>Vehicle category wise ride distribution</h5>
+        <div class="justify-content-between d-flex is-align-items-center">
+          <div class="d-flex align-items-center">
+            <h5 class="mb-0">Vehicle category wise ride distribution</h5>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-primary d-block">
+              <i class="bi bi-file-excel-fill"></i>
+            </button>
+            <button
+              class="btn btn-primary d-block"
+              (click)="GetReportForVehiclecategorywiseridedistribution()"
+            >
+              <i class="bi bi-file-pdf-fill"></i>
+            </button>
+            <button class="btn btn-primary d-block">
+              <i class="bi bi-eye-fill"></i>
+            </button>
+          </div>
+        </div>
         <hr class="homeTable-divider" />
         <canvas id="myChart"></canvas>
       </div>
     </div>
+
     <div *ngIf="isValue == 3" class="container border">
       <div class="Chart p-4">
-        <h5>Best and worst rated drivers in each city with details</h5>
+        <div class="justify-content-between d-flex is-align-items-center">
+          <div class="d-flex align-items-center">
+            <h5 class="mb-0">
+              Best and worst rated drivers in each city with details
+            </h5>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-primary d-block">
+              <i class="bi bi-file-excel-fill"></i>
+            </button>
+            <button
+              class="btn btn-primary d-block"
+              (click)="
+                GetReportForBestandworstrateddriversineachcitywithdetails()
+              "
+            >
+              <i class="bi bi-file-pdf-fill"></i>
+            </button>
+            <button class="btn btn-primary d-block">
+              <i class="bi bi-eye-fill"></i>
+            </button>
+          </div>
+        </div>
         <hr class="homeTable-divider" />
         <table class="table table-bordered table-hover table-striped">
           <thead style="background-color: #343a40; color: white">
@@ -82,12 +125,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr
-              *ngFor="
-                let driver of driverRatingData
-
-              "
-            >
+            <tr *ngFor="let driver of driverRatingData">
               <td>{{ driver.currentcity }}</td>
               <td>{{ driver.best_rated_driver_name }}</td>
               <td
@@ -100,16 +138,38 @@
             </tr>
           </tbody>
         </table>
-        <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
       </div>
+      <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
     </div>
+
     <div *ngIf="isValue == 4" class="container border">
       <div class="Chart p-4">
-        <h5>Rides with maximum and minimum fares in each city.</h5>
+        <div class="justify-content-between d-flex is-align-items-center">
+          <div class="d-flex align-items-center">
+            <h5 class="mb-0">
+              Rides with maximum and minimum fares in each city.
+            </h5>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-primary d-block">
+              <i class="bi bi-file-excel-fill"></i>
+            </button>
+            <button
+              class="btn btn-primary d-block"
+              (click)="GetReportForRideswithmaximumandminimumfaresineachcity()"
+            >
+              <i class="bi bi-file-pdf-fill"></i>
+            </button>
+            <button class="btn btn-primary d-block">
+              <i class="bi bi-eye-fill"></i>
+            </button>
+          </div>
+        </div>
         <hr class="homeTable-divider" />
         <canvas id="myChart"></canvas>
       </div>
     </div>
+
     <div *ngIf="isValue == 5" class="container border">
       <div class="Chart p-4">
         <h5>Cancelled ride distribution city wise in a duration.</h5>
