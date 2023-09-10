@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HeroService } from '../hero.service';
 import { Router } from '@angular/router';
+import { CordysServiceService } from '../cordys-service.service';
 
 @Component({
   selector: 'app-header',
@@ -10,10 +11,8 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit {
 
 
-  constructor(public hs: HeroService, public router: Router) {
-    debugger;
+  constructor(public hs: HeroService, public router: Router, private service: CordysServiceService) { }
 
-  }
   userRole: any;
 
   ngOnInit(): void {

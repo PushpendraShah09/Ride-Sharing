@@ -1,0 +1,90 @@
+<div class="container-fluid">
+  <div class="container">
+    <div class="p-4">
+      <div class="justify-content-between d-flex is-align-items-center">
+        <div class="d-flex align-items-center">
+          <h5 class="mb-0">Rider History</h5>
+        </div>
+        <div class="d-flex gap-2">
+          <button class="btn btn-primary d-block">
+            <i class="bi bi-file-excel-fill"></i>
+          </button>
+          <button class="btn btn-primary d-block">
+            <i class="bi bi-file-pdf-fill"></i>
+          </button>
+        </div>
+      </div>
+      <hr class="homeTable-divider" />
+      <table class="table table-bordered table-hover">
+        <thead style="background-color: #343a40; color: white">
+          <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Current City</th>
+            <th>From Location</th>
+            <th>To Location</th>
+            <th>Date</th>
+            <th>Ride Status</th>
+            <!-- Add more table headers as needed -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of riderHistoryData; let i = index">
+            <td>{{ item.transition_id }}</td>
+            <td>{{ item.username }}</td>
+            <td>{{ item.currentcity }}</td>
+            <td>{{ item.fromlocation }}</td>
+            <td>{{ item.tolocation }}</td>
+            <td>{{ item.date }}</td>
+            <td>{{ item.ridestatus }}</td>
+            <!-- Add more table data cells for other properties -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="container">
+    <div class="p-4">
+      <div class="justify-content-between d-flex is-align-items-center">
+        <div class="d-flex align-items-center">
+          <h5 class="mb-0">User History</h5>
+        </div>
+        <div class="d-flex gap-2">
+          <button class="btn btn-primary d-block">
+            <i class="bi bi-file-excel-fill"></i>
+          </button>
+          <button class="btn btn-primary d-block">
+            <i class="bi bi-file-pdf-fill"></i>
+          </button>
+        </div>
+      </div>
+      <hr class="homeTable-divider" />
+      <table class="table table-bordered table-hover">
+        <thead style="background-color: #343a40; color: white">
+          <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Current City</th>
+            <th>From Location</th>
+            <th>To Location</th>
+            <th>Date</th>
+            <th>Ride Status</th>
+            <!-- Add more table headers as needed -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of userHistoryData; let i = index">
+            <td>{{ item.transition_id }}</td>
+            <td>{{ item.ridername }}</td>
+            <td>{{ item.currentcity }}</td>
+            <td>{{ item.fromlocation }}</td>
+            <td>{{ item.tolocation }}</td>
+            <td>{{ item.date }}</td>
+            <td>{{ item.ridestatus }}</td>
+            <!-- Add more table data cells for other properties -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

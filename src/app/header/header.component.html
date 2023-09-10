@@ -1,49 +1,50 @@
 <div class="navbarr">
   <div class="container-fluid d-flex">
     <div class="row">
-    <div class="navb-logo">
-      <img src="../../assets/Images/logo.png" alt="logo" />
-    </div>
-  </div>
-  <div class="row">
-    <div class="navb-items d-flex">
-      <div
-        (click)="toggle1()"
-        [ngClass]="{ 'item-active': isValue == 1 }"
-        class="item"
-      >
-        <a routerLink="/home">Home</a>
-      </div>
-
-      <div
-        (click)="toggle2()"
-        [ngClass]="{ 'item-active': isValue == 2 }"
-        class="item"
-        *ngIf="userRole == 'userRS' || userRole == 'RiderRS'"
-      >
-        <a>Rides</a>
-      </div>
-
-      <div
-        (click)="toggle3()"
-        [ngClass]="{ 'item-active': isValue == 3 }"
-        class="item"
-      >
-        <a>Contact</a>
-      </div>
-
-      <div *ngIf="userRole == ''" class="item-button">
-        <a class="rounded-button fs-5" type="button" routerLink="/login"
-          >Login</a
-        >
-      </div>
-
-      <div *ngIf="userRole != ''" class="item-button">
-        <a class="rounded-button" type="button" (click)="Logout()"
-          ><span class="fs-5">Log out</span></a
-        >
+      <div class="navb-logo">
+        <img src="../../assets/Images/logo.png" alt="logo" />
       </div>
     </div>
+    <div class="row">
+      <div class="navb-items d-flex">
+        <div
+          (click)="toggle1()"
+          [ngClass]="{ 'item-active': isValue == 1 }"
+          class="item"
+        >
+          <a routerLink="/home">Home</a>
+        </div>
+
+        <div
+          (click)="toggle2()"
+          [ngClass]="{ 'item-active': isValue == 2 }"
+          class="item"
+          *ngIf="userRole == 'userRS' || userRole == 'RiderRS'"
+          routerLink="/myhistory"
+        >
+          <a>Rides</a>
+        </div>
+
+        <div
+          (click)="toggle3()"
+          [ngClass]="{ 'item-active': isValue == 3 }"
+          class="item"
+        >
+          <a>Contact</a>
+        </div>
+
+        <div *ngIf="userRole == ''" class="item-button">
+          <a class="rounded-button fs-5" type="button" routerLink="/login"
+            >Login</a
+          >
+        </div>
+
+        <div *ngIf="userRole != ''" class="item-button">
+          <a class="rounded-button" type="button" (click)="Logout()"
+            ><span class="fs-5">Log out</span></a
+          >
+        </div>
+      </div>
     </div>
 
     <!-- Button trigger modal -->

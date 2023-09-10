@@ -13,9 +13,25 @@ export class CordysServiceService {
       'http://schemas.cordys.com/UserManagement/1.0/Organization',
       params
     );
-    Best_and_worst_rated_drivers_in_each_city_with_details = (params: any) =>
+
+Best_and_worst_rated_drivers_in_each_city_with_details = (params: any) =>
     this.hs.ajax(
       'Best_and_worst_rated_drivers_in_each_city_with_details',
+      'http://schemas.cordys.com/WSAppServerPackageRS',
+      params
+    );
+
+
+GetRiderHistory = (params: any) =>
+    this.hs.ajax(
+      'GetRiderHistory',
+      'http://schemas.cordys.com/WSAppServerPackageRS',
+      params
+    );
+
+GetUserHistory  = (params: any) =>
+    this.hs.ajax(
+      'GetUserHistory ',
       'http://schemas.cordys.com/WSAppServerPackageRS',
       params
     );

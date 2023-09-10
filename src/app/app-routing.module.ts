@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { UserpageComponent } from './userpage/userpage.component';
 import { RiderpageComponent } from './riderpage/riderpage.component';
 import { AdminpageComponent } from './adminpage/adminpage.component';
+import { HistoryComponent } from './history/history.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'userpage', component: UserpageComponent },
   { path: 'riderpage', component: RiderpageComponent },
   { path: 'adminpage', component: AdminpageComponent },
+  { path: 'myhistory', component: HistoryComponent },
   // { path: 'riderpage', loadChildren: () => import('./riderpage/riderpage.module').then(m => m.RiderpageModule) },
   // {
   //   path: 'adminpage',
@@ -27,4 +29,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

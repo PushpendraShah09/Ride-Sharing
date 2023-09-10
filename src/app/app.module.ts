@@ -18,6 +18,8 @@ import { AdminpageModule } from './adminpage/adminpage.module';
 import { UserpageModule } from './userpage/userpage.module';
 import { RiderpageModule } from './riderpage/riderpage.module';
 import { NgxUiLoaderModule, NgxUiLoaderConfig, SPINNER } from 'ngx-ui-loader';
+import { HttpClientModule } from '@angular/common/http';
+import { HistoryComponent } from './history/history.component';
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   fgsColor: '#ffffff',
   bgsSize: 40,
@@ -31,6 +33,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     HeaderComponent,
     SidenavComponent,
     FooterComponent,
+    HistoryComponent,
 
 
   ],
@@ -44,7 +47,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     LoginModule,
     RiderpageModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
-    AdminpageModule
+    AdminpageModule,
+    HttpClientModule
 
   ],
   providers: [],
