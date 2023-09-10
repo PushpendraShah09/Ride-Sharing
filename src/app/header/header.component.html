@@ -31,16 +31,16 @@
           *ngIf="userRole == 'userRS' || userRole == 'RiderRS'"
           routerLink="/myhistory"
         >
-          <a>Rides</a>
+          <a>My Rides</a>
         </div>
 
-        <div
+        <!-- <div
           (click)="toggle3()"
           [ngClass]="{ 'item-active': isValue == 3 }"
           class="item"
         >
           <a>Contact</a>
-        </div>
+        </div> -->
 
         <div *ngIf="userRole == ''" class="item-button">
           <a class="rounded-button fs-5" type="button" routerLink="/login"
@@ -95,10 +95,10 @@
                 <a href="">Rides</a>
               </div>
 
-              <div class="modal-line">
+              <!-- <div class="modal-line">
                 <i class="fa-solid fa-address-book"></i>
                 <a href="">Contact</a>
-              </div>
+              </div> -->
 
               <a
                 *ngIf="userRole == null"
