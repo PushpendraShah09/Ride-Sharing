@@ -1,5 +1,5 @@
 <div class="container-fluid">
-  <div class="container">
+  <div *ngIf="userRole == 'userRS'" class="container">
     <div class="p-4">
       <div class="justify-content-between d-flex is-align-items-center">
         <div class="d-flex align-items-center">
@@ -15,6 +15,21 @@
         </div>
       </div>
       <hr class="homeTable-divider" />
+      <div class="row">
+        <div class="col-md-3 mb-3">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="searchText"
+            placeholder="Search..."
+          />
+        </div>
+        <div class="col-md-3">
+          <button class="btn btn-primary" (click)="applySearchFilter()">
+            Search
+          </button>
+        </div>
+      </div>
       <table class="table table-bordered table-hover">
         <thead style="background-color: #343a40; color: white">
           <tr>
@@ -43,7 +58,7 @@
       </table>
     </div>
   </div>
-  <div class="container">
+  <div *ngIf="userRole == 'RiderRS'" class="container">
     <div class="p-4">
       <div class="justify-content-between d-flex is-align-items-center">
         <div class="d-flex align-items-center">
@@ -59,6 +74,21 @@
         </div>
       </div>
       <hr class="homeTable-divider" />
+      <div class="row">
+        <div class="col-md-3 mb-3">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="searchText"
+            placeholder="Search..."
+            (ngModelChange)="applySearchFilter()"
+          />
+        </div>
+        
+        <!-- <div class="col-md-3">
+          <button class="btn btn-primary" (click)="applySearchFilter()">Search</button>
+        </div> -->
+      </div>
       <table class="table table-bordered table-hover">
         <thead style="background-color: #343a40; color: white">
           <tr>
@@ -73,7 +103,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of userHistoryData; let i = index">
+          <tr *ngFor="let item of filteredTableData; let i = index">
             <td>{{ item.transition_id }}</td>
             <td>{{ item.ridername }}</td>
             <td>{{ item.currentcity }}</td>

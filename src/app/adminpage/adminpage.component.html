@@ -148,7 +148,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let driver of driverRatingData">
+            <tr *ngFor="let driver of driverRatingData | paginate: { itemsPerPage: 10, currentPage: p }">
               <td>{{ driver.currentcity }}</td>
               <td>{{ driver.best_rated_driver_name }}</td>
               <td
@@ -162,7 +162,7 @@
           </tbody>
         </table>
       </div>
-      <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
     </div>
 
     <div *ngIf="isValue == 4" class="container border">
@@ -216,6 +216,19 @@
           </div>
         </div>
         <hr class="homeTable-divider" />
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="searchText"
+              placeholder="Search..."
+            />
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-primary" (click)="applySearchFilter()">Search</button>
+          </div>
+        </div>
         <table class="table table-bordered table-hover table-striped">
           <thead style="background-color: #343a40; color: white">
             <tr>
@@ -227,7 +240,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let User of UserDetails">
+            <tr *ngFor="let User of UserDetails | paginate: { itemsPerPage: 10, currentPage: p }">
               <td>{{ User.id }}</td>
               <td>{{ User.name }}</td>
               <td>{{ User.email }}</td>
@@ -237,7 +250,7 @@
           </tbody>
         </table>
       </div>
-      <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
     </div>
 
     <div *ngIf="isValue == 7" class="container border">
@@ -250,6 +263,19 @@
           </div>
         </div>
         <hr class="homeTable-divider" />
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="searchText"
+              placeholder="Search..."
+            />
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-primary" (click)="applySearchFilter()">Search</button>
+          </div>
+        </div>
         <table class="table table-bordered table-hover table-striped">
           <thead style="background-color: #343a40; color: white">
             <tr>
@@ -264,7 +290,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let Rider of RiderDetails">
+            <tr *ngFor="let Rider of RiderDetails | paginate: { itemsPerPage: 10, currentPage: p }">
               <td>{{ Rider.id }}</td>
               <td>{{ Rider.name }}</td>
               <td>{{ Rider.age }}</td>
@@ -277,7 +303,7 @@
           </tbody>
         </table>
       </div>
-      <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
     </div>
   </div>
 </div>

@@ -7,6 +7,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import * as Leaflet from 'leaflet'
 import "leaflet-control-geocoder"
 import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -17,7 +18,7 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     UserpageRoutingModule,
     LeafletModule,
-    FormsModule
+    FormsModule,NgSelectModule
   ],
   exports: [
     UserpageComponent

@@ -6,47 +6,66 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
-  styleUrls: ['./history.component.scss']
+  styleUrls: ['./history.component.scss'],
 })
 export class HistoryComponent implements OnInit {
-  constructor(public hs: HeroService, public router: Router, private service: CordysServiceService) { }
+  constructor(
+    public hs: HeroService,
+    public router: Router,
+    private service: CordysServiceService
+  ) {}
 
-  riderHistoryData: any
-  userHistoryData: any
+  riderHistoryData: any;
+  userHistoryData: any;
   GetRiderHistory() {
-    this.service.GetRiderHistory({RideName:'pushpendra'})
+    this.service
+      .GetRiderHistory({ RideName: 'pushpendra' })
       .then((resp: any) => {
         console.log(resp);
-        debugger
+        debugger;
 
-        this.riderHistoryData = this.hs.xmltojson(resp, 'ride_transition_ridesharing');
+        this.riderHistoryData = this.hs.xmltojson(
+          resp,
+          'ride_transition_ridesharing'
+        );
 
         debugger;
       });
   }
 
-  GetUserHistory () {
-    this.service.GetUserHistory ({UserName:'rahul'})
-      .then((resp: any) => {
-        console.log(resp);
-        debugger
+  GetUserHistory() {
+    this.service.GetUserHistory({ UserName: 'rahul' }).then((resp: any) => {
+      console.log(resp);
+      debugger;
 
-        this.userHistoryData = this.hs.xmltojson(resp, 'ride_transition_ridesharing');
+      this.userHistoryData = this.hs.xmltojson(
+        resp,
+        'ride_transition_ridesharing'
+      );
+      this.filteredTableData = this.userHistoryData;
 
-        debugger;
-      });
+      debugger;
+    });
   }
-  userRole:any
+  userRole: any;
   ngOnInit() {
-    this.hs.callToggle.subscribe((role) => {
-      console.log(role);
-      this.userRole = role;
+    this.userRole = localStorage.getItem('userRole');
 
-    })
     this.GetRiderHistory();
     this.GetUserHistory();
-
   }
 
+  filteredTableData: any[] = []; // Initialize as an empty array
+  tableData: any[] = []; // Initialize with your data
+  searchText: string = ''; // Initialize searchText as an empty string
 
+  applySearchFilter() {
+    debugger;
+    this.filteredTableData = this.userHistoryData.filter((item: any) => {
+      return Object.keys(item).some((key) => {
+        const value = (item[key] || '').toString().toLowerCase();
+        return value.includes(this.searchText.toLowerCase());
+      });
+    });
+  }
 }

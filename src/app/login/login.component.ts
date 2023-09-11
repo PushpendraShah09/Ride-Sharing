@@ -3,6 +3,7 @@ import { HeroService } from '../hero.service';
 import { Router } from '@angular/router';
 import { CordysServiceService } from '../cordys-service.service';
 declare var $: any;
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -48,6 +49,7 @@ export class LoginComponent implements OnInit {
     $.cordys.authentication.sso
       .authenticate(this.data.user, this.data.pass)
       .done((resp: any) => {
+        localStorage.setItem('UserName', this.data.user);
         this.GetUserDetails();
       });
   }

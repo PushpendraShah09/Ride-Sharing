@@ -445,6 +445,18 @@ GetRider_master_ridesharingObjects() {
     });
 }
 
+filteredTableData:any;
+tableData:any;
+searchText:any;
+applySearchFilter() {
+  debugger;
+  this.filteredTableData = this.tableData.filter((item: { [x: string]: any; }) => {
+  return Object.keys(item).some(key => {
+  const value = (item[key] || '').toString().toLowerCase()
+  return value.includes(this.searchText.toLowerCase());
+})
+})
+}
 
 }
 

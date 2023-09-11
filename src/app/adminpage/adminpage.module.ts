@@ -17,6 +17,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     FormsModule,
     AdminpageRoutingModule,
     DataTablesModule,
+    NgxPaginationModule,
   ]
 })
 export class AdminpageModule { }

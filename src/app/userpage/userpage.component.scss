@@ -58,3 +58,19 @@
   background-color: #f0f0f0;
   padding: 20px;
 }
+
+/* Define a CSS class for the hover effect */
+.hover-effect {
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 0.25rem;
+  padding-inline: 0.5rem;
+  padding-block: 0.5rem;
+}
+
+/* Apply the hover effect when hovering over the divs */
+.two-wheeler:hover,
+.three-wheeler:hover,
+.four-wheeler:hover {
+  background-color: #c2c2c2; /* Change the background color */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Add a box shadow */
+}

@@ -21,6 +21,8 @@ import { NgxUiLoaderModule, NgxUiLoaderConfig, SPINNER } from 'ngx-ui-loader';
 import { HttpClientModule } from '@angular/common/http';
 import { HistoryComponent } from './history/history.component';
 import { DataTablesModule } from 'angular-datatables';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   fgsColor: '#ffffff',
@@ -51,6 +53,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     AdminpageModule,
     HttpClientModule,
     DataTablesModule,
+    NgSelectModule,
+    ModalModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,16 +1,39 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
+import * as $ from 'jquery';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 @Component({
   selector: 'app-riderpage',
   templateUrl: './riderpage.component.html',
   styleUrls: ['./riderpage.component.scss']
 })
-export class RiderpageComponent {
+export class RiderpageComponent implements OnInit,AfterViewInit  {
+
+  bsModalRef: BsModalRef | undefined; // Declare bsModalRef property
+
+  constructor(private renderer: Renderer2) {}
+  ngOnInit(): void {
+    //his.openModalOnInit();
+  }
+
+  
+
+  openModalOnInit() {
+    // Use Renderer2 to programmatically trigger the modal's 'show' method
+    const modalElement = document.getElementById('exampleModal');
+    if (modalElement) {
+      this.renderer.addClass(modalElement, 'show');
+      this.renderer.setStyle(modalElement, 'display', 'block');
+    }
+  }
+
   @ViewChild('map') private mapContainer!: ElementRef;
   private map!: L.Map;
   ngAfterViewInit() {
     this.initMap();
+  
+
   }
 
   private initMap(): void {
@@ -30,5 +53,12 @@ export class RiderpageComponent {
       ],
     }).addTo(this.map);
   }
+
+  // ngOnInit(): void {
+  //   $('#myModal').modal('show');
+    
+  // }
+
+ 
 
 }
