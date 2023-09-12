@@ -9,31 +9,50 @@ declare var $: any;
 @Component({
   selector: 'app-riderpage',
   templateUrl: './riderpage.component.html',
-  styleUrls: ['./riderpage.component.scss']
+  styleUrls: ['./riderpage.component.scss'],
 })
-
 export class RiderpageComponent implements OnInit {
-
   map!: L.Map;
   markers: L.Marker[] = [];
-  RiderMarker:any;
+  RiderMarker: any;
 
-constructor( public hs: HeroService, public router: Router ) {}
- 
- UserName:any;
+  constructor(public hs: HeroService, public router: Router) {}
+
+  UserName: any;
   ngOnInit(): void {
-    this.UserName = localStorage.getItem('UserName');
-    this.GetMap();
 
+    this.UserName = localStorage.getItem('UserName');
+
+    // this.getUserLocation()
+    this.GetMap();
     this.GetRiderInfoBYName();
-    debugger
-    $('#exampleModal').modal('show');
+
+    debugger;
   }
 
+  userLocationMarker:any;
+  getUserLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+        console.log(`Current Location: Lat: ${lat}, Lng: ${lng}`);
+        const userLocation = { lat, lng };
+        //this.clearMarkers();
 
+        // Set the map view and add a new user location marker
+        this.map = L.map('map').setView([0, 0], 16);
 
-  RiderInfo:any;
-  GetRiderInfoBYName(){
+        this.map.setView([lat, lng], 16);
+        this.userLocationMarker = L.marker(userLocation).addTo(this.map);
+      });
+    } else {
+      console.error('Geolocation is not supported by this browser.');
+    }
+  }
+
+  RiderInfo: any;
+  GetRiderInfoBYName() {
     const that = this;
     debugger;
     this.hs
@@ -48,32 +67,30 @@ constructor( public hs: HeroService, public router: Router ) {}
         this.RiderInfo = this.hs.xmltojson(resp, 'rider_master_ridesharing');
         console.log('Rider Info ->', this.RiderInfo);
       });
+      //this.RiderLocationMarker();
   }
 
-GetMap(){
-  this.map = L.map('map').setView([0, 0], 16);
+  GetMap() {
+    this.map = L.map('map').setView([0, 0], 16);
+    this.map.setView([26.8849, 75.7675], 12);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(this.map);
 
-
-    this.RiderLocationMarker();
-    this.initMarkers(); 
-    this.RouteLocation() 
-
-}
-
+    // this.initMarkers();
+    // this.RouteLocation();
+  }
 
   initMarkers() {
     const initialMarkers = [
       {
-        position: { lat: 26.8241, lng: 75.8059 },
+        position: { lat: this.GetRideForRider[0].fromlat, lng: this.GetRideForRider[0].fromlng },
         draggable: false,
       },
       {
-        position: { lat: 26.9855, lng: 75.8513 },
+        position: { lat: this.GetRideForRider[0].tolat, lng: this.GetRideForRider[0].tolng },
         draggable: true,
       },
     ];
@@ -86,16 +103,16 @@ GetMap(){
         .bindPopup(`<b>${data.position.lat},  ${data.position.lng}</b>`);
       this.map.panTo(data.position);
       this.markers.push(marker);
-    }  
+    }
   }
- 
-  RouteLocation(){
-     // Add the routing control
-     L.Routing.control({
+
+  RouteLocation() {
+    // Add the routing control
+    L.Routing.control({
       waypoints: [
-        L.latLng(26.8849, 75.7675), // Starting point
-        L.latLng(26.8241, 75.8059),    // Mid point
-        L.latLng(26.9855, 75.8513)    // End point
+        L.latLng(this.RiderInfo[0].lat, this.RiderInfo[0].lng), // Starting point
+        L.latLng(this.GetRideForRider[0].fromlat, this.GetRideForRider[0].fromlng), // Mid point
+        L.latLng(this.GetRideForRider[0].tolat, this.GetRideForRider[0].tolng), // End point
       ],
     }).addTo(this.map);
   }
@@ -106,7 +123,6 @@ GetMap(){
       .on('dragend', (event) => this.markerDragEnd(event, index));
   }
 
-
   markerClicked($event: any, index: number) {
     debugger;
     console.log($event.latlng.lat, $event.latlng.lng);
@@ -116,17 +132,131 @@ GetMap(){
     console.log($event.target.getLatLng());
   }
 
+  // RiderLocationMarker() {
+  //   const customMarkerIcon = L.icon({
+  //     iconUrl: '../../assets/Images/bike.png',
+  //     iconSize: [48, 48],
+  //     iconAnchor: [20, 48],
+  //   });
 
-  RiderLocationMarker(){
+  //   this.map.setView([26.8849, 75.7675], 12);
 
-    const customMarkerIcon = L.icon({
-      iconUrl: '../../assets/Images/bike.png',
-      iconSize: [48, 48], 
-      iconAnchor: [20, 48], 
-    });
+  //   this.RiderMarker = L.marker([26.8849, 75.7675], {
+  //     icon: customMarkerIcon,
+  //   }).addTo(this.map);
+  // }
 
-    this.map.setView([26.8849, 75.7675], 12);
 
-    this.RiderMarker = L.marker([26.8849, 75.7675],{ icon: customMarkerIcon }).addTo(this.map);
+  flag: boolean = false;
+  GetRideForRider: any = '';
+  GetRideByRider() {
+    const that = this;
+    debugger;
+    this.hs
+      .ajax(
+        'GetRideByRider',
+        'http://schemas.cordys.com/WSAppServerPackageRS',
+        {
+          RideStatus: 'pending',
+          Vehiclecatogry: this.RiderInfo[0].vehiclecategory,
+        }
+      )
+      .then((resp) => {
+        this.GetRideForRider = this.hs.xmltojson(
+          resp,
+          'ride_transition_ridesharing'
+        );
+        console.log('GetRide ->', this.GetRideForRider);
+        $('#exampleModal').modal('show');
+      });
+  }
+
+  AccpectRide() {
+    debugger;
+    this.hs
+      .ajax(
+        'UpdateRide_transition_ridesharing',
+        'http://schemas.cordys.com/WSAppServerPackageRS',
+        {
+          tuple: {
+            old: {
+              ride_transition_ridesharing: {
+                transition_id: this.GetRideForRider[0].transition_id,
+              },
+            },
+            new: {
+              ride_transition_ridesharing: {
+                riderid: this.RiderInfo[0].id,
+                ridername: this.RiderInfo[0].name,
+                ridermobileno: this.RiderInfo[0].mobileno,
+                ridestatus: 'Accept',
+                vehicletype: this.RiderInfo[0].vehiclecategory,
+                vehicleno: this.RiderInfo[0].vehicleno,
+                vehiclemodel: this.RiderInfo[0].vehiclemodel,
+                temp1: 'Accept',
+              },
+            },
+          },
+        }
+      )
+      .then((resp) => {
+        this.flag = true;
+        console.log(resp);
+
+    this.initMarkers();
+    this.RouteLocation();
+      });
+  }
+
+  RejectRide() {
+    debugger;
+    this.hs
+      .ajax(
+        'UpdateRide_transition_ridesharing',
+        'http://schemas.cordys.com/WSAppServerPackageRS',
+        {
+          tuple: {
+            old: {
+              ride_transition_ridesharing: {
+                transition_id: this.GetRideForRider[0].transition_id,
+              },
+            },
+            new: {
+              ride_transition_ridesharing: {
+                temp1: 'Reject',
+              },
+            },
+          },
+        }
+      )
+      .then((resp) => {
+        console.log(resp);
+      });
+  }
+
+  CompleteRide() {
+    debugger;
+    this.hs
+      .ajax(
+        'UpdateRide_transition_ridesharing',
+        'http://schemas.cordys.com/WSAppServerPackageRS',
+        {
+          tuple: {
+            old: {
+              ride_transition_ridesharing: {
+                transition_id: this.GetRideForRider[0].transition_id,
+              },
+            },
+            new: {
+              ride_transition_ridesharing: {
+                ridestatus: 'complete',
+              },
+            },
+          },
+        }
+      )
+      .then((resp) => {
+        console.log(resp);
+      });
   }
 }

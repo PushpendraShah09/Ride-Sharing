@@ -21,7 +21,11 @@ export class UserpageComponent implements OnInit {
   NewSearchLocationMarker: any;
   searchResults: any[] = [];
   selectedLocation: any;
+  activeDiv: string | null = null;
   // routeControl: L.Routing.Control | null = null;
+  toggleActiveDiv(divName: string): void {
+    this.activeDiv = this.activeDiv === divName ? null : divName;
+  }
 
   constructor(
     public hs: HeroService,
@@ -101,6 +105,7 @@ export class UserpageComponent implements OnInit {
 
     this.getUserLocation();
     //this.initMarkers();
+    this.RiderLocationMarker();
   }
 
   getUserLocation() {
@@ -150,7 +155,7 @@ export class UserpageComponent implements OnInit {
     }
     this.getLocation();
   }
-  
+
   nativeCity: any;
   getLocation(): void {
     debugger;
@@ -165,16 +170,14 @@ export class UserpageComponent implements OnInit {
         this.httpClient.get(apiUrl).subscribe((data: any) => {
           debugger;
           // Access the address components you need from the response data
-          this.currentLocation = data.features[0].properties.locality;
-          this.nativeCity = data.features[0].properties.county;
+          this.currentLocation = data.features[0].properties.county;
+          this.nativeCity = data.features[0].properties.city;
         });
       });
     } else {
       console.error('Geolocation is not supported by this browser.');
     }
   }
-
-
 
   searchLocation(val: any) {
     const searchEndpoint = `https://photon.komoot.io/api/?q=${val}&limit=1`;
@@ -294,8 +297,7 @@ export class UserpageComponent implements OnInit {
             const distanceInKilometers = distanceInMeters / 1000;
             // this.distanceInKilometersString =
             //   distanceInKilometers.toFixed(2) + ' km';
-            this.distanceInKilometersString =
-              distanceInKilometers.toFixed(2);
+            this.distanceInKilometersString = distanceInKilometers.toFixed(2);
             console.log(
               'Total Distance:',
               distanceInKilometers.toFixed(2),
@@ -355,8 +357,7 @@ export class UserpageComponent implements OnInit {
             const distanceInKilometers = distanceInMeters / 1000;
             // this.distanceInKilometersString =
             //   distanceInKilometers.toFixed(2) + ' km';
-            this.distanceInKilometersString =
-              distanceInKilometers.toFixed(2);
+            this.distanceInKilometersString = distanceInKilometers.toFixed(2);
             console.log(
               'Total Distance:',
               distanceInKilometers.toFixed(2),
@@ -475,8 +476,55 @@ export class UserpageComponent implements OnInit {
           },
         }
       )
+      .then((resp: any) => {
+        console.log(resp);
+        debugger;
+        this.transID = resp.tuple.new.ride_transition_ridesharing.transition_id;
+      });
+  }
+  transID: any;
+  RiderMarker: any;
+  RiderLocationMarker() {
+    const customMarkerIcon = L.icon({
+      iconUrl: '../../assets/Images/bike.png',
+      iconSize: [48, 48],
+      iconAnchor: [20, 48],
+    });
+
+    this.map.setView([26.8849, 75.7675], 12);
+
+    this.RiderMarker = L.marker([26.8849, 75.7675], {
+      icon: customMarkerIcon,
+    }).addTo(this.map);
+    // this.RiderMarker = L.marker([this.RiderInfo[0].lat, this.RiderInfo[0].lng], {
+    //   icon: customMarkerIcon,
+    // }).addTo(this.map);
+  }
+
+  CancelRide() {
+    debugger;
+    this.hs
+      .ajax(
+        'UpdateRide_transition_ridesharing',
+        'http://schemas.cordys.com/WSAppServerPackageRS',
+        {
+          tuple: {
+            old: {
+              ride_transition_ridesharing: {
+                transition_id: this.transID,
+              },
+            },
+            new: {
+              ride_transition_ridesharing: {
+                ridestatus: 'cancel',
+              },
+            },
+          },
+        }
+      )
       .then((resp) => {
         console.log(resp);
+        this.routingControl.setWaypoints([]);
       });
   }
 }

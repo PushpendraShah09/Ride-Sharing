@@ -22,14 +22,15 @@
           class="form-control"
           [(ngModel)]="searchText"
           placeholder="Search..."
+          (keyup)="applySearchFilter()"
          
           />
         </div>
-        <div class="col-md-3">
+        <!-- <div class="col-md-3">
           <button class="btn btn-primary" (click)="applySearchFilter()">
             Search
           </button>
-        </div>
+        </div> -->
       </div>
       <table class="table table-bordered table-hover">
         <thead style="background-color: #343a40; color: white">

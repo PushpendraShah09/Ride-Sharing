@@ -52,6 +52,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('UserName', this.data.user);
         this.GetUserDetails();
       });
+      
   }
 
   UserData: any;
@@ -73,6 +74,16 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl('/adminpage');
         this.hs.callToggle.next(this.UserRole);
       }
+    });
+
+    this.hs.toast({
+      title: 'Success!',
+      text: 'Log In successfully',
+      icon: 'success',
+      toast: true,
+      position: 'top-end',
+      timer: 2000,
+      showConfirmButton: false,
     });
   }
 
@@ -123,6 +134,30 @@ export class LoginComponent implements OnInit {
 
   /* Send Mail Service */
   SendMail() {
+
+    var MailBody = 'Dear ' + this.NewUser.username +
+    '\nWelcome to RideShare, your trusted partner for convenient and affordable rides! We are excited to have you on board and ready to provide you with the best ride-sharing experience.\n\n'
+    +
+    'Name : ' +this.NewUser.username+';\n' +
+    'Email : ' +this.NewUser.email+';\n\n'
+    +
+    'To get started with RideShare, log in using your registered User Id and password. With RideShare, you can:\n\n'
+    +
+    '- Easily book a ride anytime, anywhere\n'+
+    '- Choose from a variety of vehicle options\n'+
+    '- Track your ride in real-time\n'+
+    '- Pay securely using your preferred payment method\n'+
+    '- Rate and review your drivers\n\n'
+    +
+    'Thank you for choosing RideShare. We look forward to providing you with a seamless ride-sharing experience. Welcome aboard!\n\n'
+    +
+    'Best regards,\n'
+    +
+    'Ride Sharing\n';
+
+
+
+
     debugger;
     this.hs
       .ajax('SendMail', 'http://schemas.cordys.com/1.0/email', {
@@ -145,7 +180,7 @@ export class LoginComponent implements OnInit {
         //   }
         // },
         subject: 'Welcom to Ride Sharing - Your Signup Confirmation',
-        body: this.MailBody,
+        body: MailBody,
         // attachments: {
         //   attachment: PARAMETER,
         // },
@@ -163,24 +198,6 @@ export class LoginComponent implements OnInit {
       });
   }
 
-  MailBody ='Dear' + this.NewUser.username +
-    '\nWelcome to RideShare, your trusted partner for convenient and affordable rides! We are excited to have you on board and ready to provide you with the best ride-sharing experience.\n\n'
-    +
-    'Name : ' +this.NewUser.username+';\n' +
-    'Email :' +this.NewUser.email+';\n\n'
-    +
-    'To get started with RideShare, log in using your registered User Id and password. With RideShare, you can:\n\n'
-    +
-    '- Easily book a ride anytime, anywhere\n'+
-    '- Choose from a variety of vehicle options\n'+
-    '- Track your ride in real-time\n'+
-    '- Pay securely using your preferred payment method\n'+
-    '- Rate and review your drivers\n\n'
-    +
-    'Thank you for choosing RideShare. We look forward to providing you with a seamless ride-sharing experience. Welcome aboard!\n\n'
-    +
-    'Best regards,\n'
-    +
-    'Ride Sharing\n';
+  
 
 }

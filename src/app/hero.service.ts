@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { BehaviorSubject, Subject } from 'rxjs';
+import Swal from 'sweetalert2';
 declare var $: any;
 
 @Injectable({
@@ -40,6 +41,11 @@ export class HeroService {
         },
       });
     });
+  }
+
+
+  toast(data: any) {
+    Swal.fire(data);
   }
 
 }

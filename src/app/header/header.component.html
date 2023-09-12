@@ -23,6 +23,14 @@
         >
           <a routerLink="/userpage">Book Ride</a>
         </div>
+        <div
+          *ngIf="userRole == 'RiderRS'"
+          (click)="toggle5()"
+          [ngClass]="{ 'item-active': isValue == 5 }"
+          class="item"
+        >
+          <a routerLink="/riderpage">Get Ride</a>
+        </div>
 
         <div
           (click)="toggle2()"

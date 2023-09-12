@@ -33,14 +33,14 @@
         </li>
         <li (click)="toggle(6)" class="nav-item">
           <a class="nav-link">
-            <span class="icon"><i class="bi bi-person-fill"></i></span> User 
+            <span class="icon"><i class="bi bi-person-fill"></i></span> User
             Details
           </a>
         </li>
         <li (click)="toggle(7)" class="nav-item">
           <a class="nav-link">
-            <span class="icon"><i class="bi bi-taxi-front-fill"></i></span> Rider 
-            Details
+            <span class="icon"><i class="bi bi-taxi-front-fill"></i></span>
+            Rider Details
           </a>
         </li>
       </ul>
@@ -148,7 +148,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let driver of driverRatingData | paginate: { itemsPerPage: 10, currentPage: p }">
+            <tr
+              *ngFor="
+                let driver of driverRatingData
+                  | paginate : { itemsPerPage: 10, currentPage: p }
+              "
+            >
               <td>{{ driver.currentcity }}</td>
               <td>{{ driver.best_rated_driver_name }}</td>
               <td
@@ -206,24 +211,43 @@
           <div class="col-md-6">
             <label for="startDate">Start Date:</label>
             <input
-              type="text"
+              type="date"
               class="form-control"
               id="startDate"
               placeholder="dd-mm-yyyy"
+              [(ngModel)]="DateInput.startDate"
             />
           </div>
           <div class="col-md-6">
             <label for="endDate">End Date:</label>
             <input
-              type="text"
+              type="date"
               class="form-control"
               id="endDate"
               placeholder="dd-mm-yyyy"
+              [(ngModel)]="DateInput.endDate"
             />
           </div>
         </div>
-        
-        <canvas id="myChart"></canvas>
+        <button (click)="TriggerService(DateInput)" class="btn btn-primary">
+          Search
+        </button>
+        <table class="table table-bordered table-hover">
+          <thead style="background-color: #343a40; color: white">
+            <tr>
+              <th>ID</th>
+              <th>Cancelled Ride Count</th>
+              <th>Current City</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of cancelRideD; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ item.cancelled_ride_count }}</td>
+              <td>{{ item.currentcity }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
@@ -231,9 +255,7 @@
       <div class="Chart p-4">
         <div class="justify-content-between d-flex is-align-items-center">
           <div class="d-flex align-items-center">
-            <h5 class="mb-0">
-              User details 
-            </h5>
+            <h5 class="mb-0">User details</h5>
           </div>
         </div>
         <hr class="homeTable-divider" />
@@ -247,7 +269,9 @@
             />
           </div>
           <div class="col-md-3">
-            <button class="btn btn-primary" (click)="applySearchFilter()">Search</button>
+            <button class="btn btn-primary" (click)="applySearchFilter()">
+              Search
+            </button>
           </div>
         </div>
         <table class="table table-bordered table-hover table-striped">
@@ -261,7 +285,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let User of UserDetails | paginate: { itemsPerPage: 10, currentPage: p }">
+            <tr
+              *ngFor="
+                let User of UserDetails
+                  | paginate : { itemsPerPage: 10, currentPage: p }
+              "
+            >
               <td>{{ User.id }}</td>
               <td>{{ User.name }}</td>
               <td>{{ User.email }}</td>
@@ -278,9 +307,7 @@
       <div class="Chart p-4">
         <div class="justify-content-between d-flex is-align-items-center">
           <div class="d-flex align-items-center">
-            <h5 class="mb-0">
-              User details 
-            </h5>
+            <h5 class="mb-0">User details</h5>
           </div>
         </div>
         <hr class="homeTable-divider" />
@@ -294,7 +321,9 @@
             />
           </div>
           <div class="col-md-3">
-            <button class="btn btn-primary" (click)="applySearchFilter()">Search</button>
+            <button class="btn btn-primary" (click)="applySearchFilter()">
+              Search
+            </button>
           </div>
         </div>
         <table class="table table-bordered table-hover table-striped">
@@ -311,7 +340,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let Rider of RiderDetails | paginate: { itemsPerPage: 10, currentPage: p }">
+            <tr
+              *ngFor="
+                let Rider of RiderDetails
+                  | paginate : { itemsPerPage: 10, currentPage: p }
+              "
+            >
               <td>{{ Rider.id }}</td>
               <td>{{ Rider.name }}</td>
               <td>{{ Rider.age }}</td>

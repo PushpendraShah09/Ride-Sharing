@@ -39,6 +39,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     FooterComponent,
     HistoryComponent,
 
+
   ],
   imports: [
     BrowserModule,
@@ -50,7 +51,6 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     LoginModule,
     RiderpageModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
-    AdminpageModule,
     HttpClientModule,
     DataTablesModule,
     NgSelectModule,

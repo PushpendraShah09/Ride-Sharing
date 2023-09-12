@@ -1,26 +1,128 @@
-<div class="Mapp" #map id="map" style="height: 500px;"></div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-3">
+      <div class="container">
+        <div style="flex-wrap: wrap" class="fs-4 mt-3">
+          <span class="fw-bolder">{{ this.RiderInfo[0].name }}</span> get your
+          <span class="fw-bold">Ride!</span>
+        </div>
+        <div class="row mt-2 justift-content-center d-flex">
+          <button (click)="GetRideByRider()" class="btn btn-primary">
+            Get Ride
+          </button>
+          <div
+            *ngIf="flag"
+            style="border-radius: 0.5rem"
+            class="container my-4 py-3 border d-block"
+          >
+            <h5 class="fw-normal text-center">Ride Details</h5>
+            <hr />
+            <label class="mx-2"
+              >Username: {{ this.GetRideForRider[0].username }}</label
+            >
+            <br />
+            <label class="mx-2"
+              >Mobile Number: {{ this.GetRideForRider[0].usermobileno }}</label
+            >
+            <br />
+
+            <label class="mx-2"
+              >From: {{ this.GetRideForRider[0].fromlocation }}</label
+            >
+            <br />
+
+            <label class="mx-2"
+              >To: {{ this.GetRideForRider[0].tolocation }}</label
+            >
+            <br />
+
+            <label class="mx-2"
+              >Distance: {{ this.GetRideForRider[0].distance }} KM</label
+            >
+            <br />
+
+            <label class="mx-2"
+              >Fare: ₹{{ this.GetRideForRider[0].ridefare }}</label
+            >
+          </div>
+        </div>
+        <div *ngIf="flag" class="row">
+          <button (click)="CompleteRide()" class="btn btn-success">
+            Complete Ride
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="container">
+        <div class="Map" #map id="map" style="height: 500px"></div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Button trigger modal -->
 <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
     Launch demo modal
   </button> -->
-  
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">New Ride Alert</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div *ngIf="this.GetRideForRider != ''" class="modal-body">
+        <span class="fs-4 fw-bold">Congratulations! You got a new ride.</span
+        ><br />
+        <span
+          ><span class="fw-bold">{{ this.GetRideForRider[0].username }}</span>
+          has requested a ride from
+          <span class="fw-bold">{{
+            this.GetRideForRider[0].fromlocation
+          }}</span>
+          to
+          <span class="fw-bold">{{ this.GetRideForRider[0].tolocation }}</span>
+          at a price of
+          <span class="fw-bold"
+            >₹{{ this.GetRideForRider[0].ridefare }}.</span
+          ></span
+        >
+      </div>
+      <div *ngIf="this.GetRideForRider == ''" class="modal-body">
+        <h5>Oops! No Ride is Available :(</h5>
+      </div>
+      <div *ngIf="this.GetRideForRider != ''" class="modal-footer">
+        <button
+          (click)="AccpectRide()"
+          type="button"
+          class="btn btn-success"
+          data-bs-dismiss="modal"
+        >
+          Accept
+        </button>
+        <button
+          data-bs-dismiss="modal"
+          (click)="RejectRide()"
+          type="button"
+          class="btn btn-danger"
+        >
+          Reject
+        </button>
       </div>
     </div>
   </div>
-  
+</div>
