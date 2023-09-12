@@ -8,6 +8,7 @@ import { DataTablesModule } from "angular-datatables";
 import { NgxPaginationModule } from 'ngx-pagination';
 
 
+
 @NgModule({
   declarations: [
     AdminpageComponent
@@ -18,6 +19,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     AdminpageRoutingModule,
     DataTablesModule,
     NgxPaginationModule,
-  ]
+  ],
+  
 })
 export class AdminpageModule { }

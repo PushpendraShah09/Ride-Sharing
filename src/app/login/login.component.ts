@@ -115,6 +115,72 @@ export class LoginComponent implements OnInit {
       .then((resp) => {
         console.log(resp);
         // alert('User_User');
+        setTimeout(() => {
+          this.SendMail();
+        }, 3000);
       });
   }
+
+  /* Send Mail Service */
+  SendMail() {
+    debugger;
+    this.hs
+      .ajax('SendMail', 'http://schemas.cordys.com/1.0/email', {
+        to: {
+          address: {
+            emailAddress: this.NewUser.email,
+            displayName: this.NewUser.username,
+          },
+        },
+        // cc: {
+        //   address: {
+        //     displayName: PARAMETER,
+        //     emailAddress: PARAMETER,
+        //   }
+        // },
+        // bcc: {
+        //   address: {
+        //     displayName: PARAMETER,
+        //     emailAddress: PARAMETER,
+        //   }
+        // },
+        subject: 'Welcom to Ride Sharing - Your Signup Confirmation',
+        body: this.MailBody,
+        // attachments: {
+        //   attachment: PARAMETER,
+        // },
+        from: {
+          displayName: 'Ride Sharing',
+          emailAddress: 'pushpendras@adnatesolutions.com',
+          replyTo: 'It is a auto generated mail, You can not reply to it.',
+        },
+        // headers: {
+        //   header: PARAMETER,
+        // }
+      })
+      .then((resp) => {
+        console.log(resp);
+      });
+  }
+
+  MailBody ='Dear' + this.NewUser.username +
+    '\nWelcome to RideShare, your trusted partner for convenient and affordable rides! We are excited to have you on board and ready to provide you with the best ride-sharing experience.\n\n'
+    +
+    'Name : ' +this.NewUser.username+';\n' +
+    'Email :' +this.NewUser.email+';\n\n'
+    +
+    'To get started with RideShare, log in using your registered User Id and password. With RideShare, you can:\n\n'
+    +
+    '- Easily book a ride anytime, anywhere\n'+
+    '- Choose from a variety of vehicle options\n'+
+    '- Track your ride in real-time\n'+
+    '- Pay securely using your preferred payment method\n'+
+    '- Rate and review your drivers\n\n'
+    +
+    'Thank you for choosing RideShare. We look forward to providing you with a seamless ride-sharing experience. Welcome aboard!\n\n'
+    +
+    'Best regards,\n'
+    +
+    'Ride Sharing\n';
+
 }

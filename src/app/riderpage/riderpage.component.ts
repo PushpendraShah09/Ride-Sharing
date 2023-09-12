@@ -1,64 +1,132 @@
-import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
-import * as $ from 'jquery';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { HeroService } from '../hero.service';
+import { Router } from '@angular/router';
+
+declare var $: any;
+
 @Component({
   selector: 'app-riderpage',
   templateUrl: './riderpage.component.html',
   styleUrls: ['./riderpage.component.scss']
 })
-export class RiderpageComponent implements OnInit,AfterViewInit  {
 
-  bsModalRef: BsModalRef | undefined; // Declare bsModalRef property
+export class RiderpageComponent implements OnInit {
 
-  constructor(private renderer: Renderer2) {}
+  map!: L.Map;
+  markers: L.Marker[] = [];
+  RiderMarker:any;
+
+constructor( public hs: HeroService, public router: Router ) {}
+ 
+ UserName:any;
   ngOnInit(): void {
-    //his.openModalOnInit();
+    this.UserName = localStorage.getItem('UserName');
+    this.GetMap();
+
+    this.GetRiderInfoBYName();
+    debugger
+    $('#exampleModal').modal('show');
   }
 
-  
 
-  openModalOnInit() {
-    // Use Renderer2 to programmatically trigger the modal's 'show' method
-    const modalElement = document.getElementById('exampleModal');
-    if (modalElement) {
-      this.renderer.addClass(modalElement, 'show');
-      this.renderer.setStyle(modalElement, 'display', 'block');
-    }
+
+  RiderInfo:any;
+  GetRiderInfoBYName(){
+    const that = this;
+    debugger;
+    this.hs
+      .ajax(
+        'GetRiderInfoBYName',
+        'http://schemas.cordys.com/WSAppServerPackageRS',
+        {
+          RiderName: this.UserName,
+        }
+      )
+      .then((resp) => {
+        this.RiderInfo = this.hs.xmltojson(resp, 'rider_master_ridesharing');
+        console.log('Rider Info ->', this.RiderInfo);
+      });
   }
 
-  @ViewChild('map') private mapContainer!: ElementRef;
-  private map!: L.Map;
-  ngAfterViewInit() {
-    this.initMap();
-  
+GetMap(){
+  this.map = L.map('map').setView([0, 0], 16);
 
-  }
-
-  private initMap(): void {
-    // Create the Leaflet map
-    this.map = L.map(this.mapContainer.nativeElement).setView([51.505, -0.09], 13);
-
-    // Add a base layer (e.g., OpenStreetMap)
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(this.map);
 
-    // Add the routing control
-    L.Routing.control({
+
+    this.RiderLocationMarker();
+    this.initMarkers(); 
+    this.RouteLocation() 
+
+}
+
+
+  initMarkers() {
+    const initialMarkers = [
+      {
+        position: { lat: 26.8241, lng: 75.8059 },
+        draggable: false,
+      },
+      {
+        position: { lat: 26.9855, lng: 75.8513 },
+        draggable: true,
+      },
+    ];
+    for (let index = 0; index < initialMarkers.length; index++) {
+      debugger;
+      const data = initialMarkers[index];
+      const marker = this.generateMarker(data, index);
+      marker
+        .addTo(this.map)
+        .bindPopup(`<b>${data.position.lat},  ${data.position.lng}</b>`);
+      this.map.panTo(data.position);
+      this.markers.push(marker);
+    }  
+  }
+ 
+  RouteLocation(){
+     // Add the routing control
+     L.Routing.control({
       waypoints: [
-        L.latLng(51.505, -0.09), // Starting point
-        L.latLng(51.51, -0.1)    // Ending point
+        L.latLng(26.8849, 75.7675), // Starting point
+        L.latLng(26.8241, 75.8059),    // Mid point
+        L.latLng(26.9855, 75.8513)    // End point
       ],
     }).addTo(this.map);
   }
 
-  // ngOnInit(): void {
-  //   $('#myModal').modal('show');
-    
-  // }
+  generateMarker(data: any, index: number) {
+    return L.marker(data.position, { draggable: data.draggable })
+      .on('click', (event) => this.markerClicked(event, index))
+      .on('dragend', (event) => this.markerDragEnd(event, index));
+  }
 
- 
 
+  markerClicked($event: any, index: number) {
+    debugger;
+    console.log($event.latlng.lat, $event.latlng.lng);
+  }
+
+  markerDragEnd($event: any, index: number) {
+    console.log($event.target.getLatLng());
+  }
+
+
+  RiderLocationMarker(){
+
+    const customMarkerIcon = L.icon({
+      iconUrl: '../../assets/Images/bike.png',
+      iconSize: [48, 48], 
+      iconAnchor: [20, 48], 
+    });
+
+    this.map.setView([26.8849, 75.7675], 12);
+
+    this.RiderMarker = L.marker([26.8849, 75.7675],{ icon: customMarkerIcon }).addTo(this.map);
+  }
 }

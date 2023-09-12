@@ -35,15 +35,15 @@ export class UserpageComponent implements OnInit {
   // initMarkers() {
   //   const initialMarkers = [
   //     {
-  //       position: { lat: 26.895905, lng: 75.726973 },
+  //       position: { lat:  26.9117507, lng: 75.7515502 },
   //       draggable: true,
   //     },
   //     {
-  //       position: { lat: 26.895705, lng: 75.726567 },
+  //       position: { lat:  26.9117507, lng: 75.726567 },
   //       draggable: false,
   //     },
   //     {
-  //       position: { lat: 26.896123, lng: 75.726467 },
+  //       position: { lat:  26.9117507, lng: 75.7521542 },
   //       draggable: true,
   //     },
   //   ];
