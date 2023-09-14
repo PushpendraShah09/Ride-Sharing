@@ -26,6 +26,8 @@ export class UserpageComponent implements OnInit {
   toggleActiveDiv(divName: string): void {
     this.activeDiv = this.activeDiv === divName ? null : divName;
   }
+  cancelFlag:Boolean = true;
+  bookRideFlag:Boolean = false;
 
   constructor(
     public hs: HeroService,
@@ -105,7 +107,7 @@ export class UserpageComponent implements OnInit {
 
     this.getUserLocation();
     //this.initMarkers();
-    this.RiderLocationMarker();
+    //this.RiderLocationMarker();
   }
 
   getUserLocation() {
@@ -133,6 +135,12 @@ export class UserpageComponent implements OnInit {
     }
     if (this.searchLocationMarker) {
       this.map.removeLayer(this.searchLocationMarker);
+    }
+    if (this.NewSearchLocationMarker) {
+      this.map.removeLayer(this.NewSearchLocationMarker);
+    }
+    if (this.RiderMarker) {
+      this.map.removeLayer(this.RiderMarker);
     }
   }
 
@@ -180,6 +188,7 @@ export class UserpageComponent implements OnInit {
   }
 
   searchLocation(val: any) {
+
     const searchEndpoint = `https://photon.komoot.io/api/?q=${val}&limit=1`;
 
     fetch(searchEndpoint)
@@ -432,6 +441,10 @@ export class UserpageComponent implements OnInit {
     this.rideArr.categ = category;
     this.rideArr.dis = dist;
     this.rideArr.price = rate;
+
+    if ( this.rideArr.categ = 'Two Wheeler') {
+      this.RiderLocationMarker();
+    }
   }
 
   /* Request For Ride by <button class="btn btn-primary mb-5">Book Ride </button> */
@@ -446,7 +459,7 @@ export class UserpageComponent implements OnInit {
     var formattedDate = `${day}-${month}-${year}`;
     console.log(formattedDate);
     // Current Date End
-
+     const that=this;
     debugger;
     this.hs
       .ajax(
@@ -479,11 +492,27 @@ export class UserpageComponent implements OnInit {
       .then((resp: any) => {
         console.log(resp);
         debugger;
-        this.transID = resp.tuple.new.ride_transition_ridesharing.transition_id;
+        this.transID = resp.tuple.new.ride_transition_ridesharing.transition_id;  
+
+        that.cancelFlag=false;
+        that.bookRideFlag=true;
+
+        this.hs.toast({
+          title: 'Success!',
+          text: 'Your Ride is in Queue!, Wait for sometime Your Rider will contact you.',
+          icon: 'success',
+          toast: true,
+          position: 'top-end',
+          timer: 5000,
+          showConfirmButton: false,
+        });
       });
   }
-  transID: any;
+
+
   RiderMarker: any;
+  RiderMarker1: any;
+  RiderMarker2: any;
   RiderLocationMarker() {
     const customMarkerIcon = L.icon({
       iconUrl: '../../assets/Images/bike.png',
@@ -496,11 +525,22 @@ export class UserpageComponent implements OnInit {
     this.RiderMarker = L.marker([26.8849, 75.7675], {
       icon: customMarkerIcon,
     }).addTo(this.map);
+
+    this.RiderMarker1 = L.marker([26.9116, 75.7441], {
+      icon: customMarkerIcon,
+    }).addTo(this.map);
+    
+
+    this.RiderMarker2 = L.marker([26.9149, 75.7436], {
+      icon: customMarkerIcon,
+    }).addTo(this.map);
     // this.RiderMarker = L.marker([this.RiderInfo[0].lat, this.RiderInfo[0].lng], {
     //   icon: customMarkerIcon,
     // }).addTo(this.map);
   }
 
+  
+  transID: any;
   CancelRide() {
     debugger;
     this.hs
@@ -525,6 +565,37 @@ export class UserpageComponent implements OnInit {
       .then((resp) => {
         console.log(resp);
         this.routingControl.setWaypoints([]);
+
+        this.router.navigateByUrl('/userpage');
+        this.hs.toast({
+          title: 'Success!',
+          text: 'Your Ride is Canceled.',
+          icon: 'success',
+          toast: true,
+          position: 'top-end',
+          timer: 5000,
+          showConfirmButton: false,
+        });
+
+        this.searchQuery = '';
+        this.distanceInKilometersString = '';
+        this.bikepriceInRupeesString ='';
+        this.AutopriceInRupeesString = '';
+        this.cabpriceInRupeesString = '';
+
+        this.RiderMarker.remove();
+        this.RiderMarker1.remove();
+        this.RiderMarker2.remove();
+      // this.RiderMarker = null;
+      // this.map.removeLayer(this.RiderMarker);
+
+        this.searchLocationMarker.remove();
+
+        this.cancelFlag=true;
+        this.bookRideFlag=false;
+
+      //this.clearMarkers();
       });
+      
   }
 }

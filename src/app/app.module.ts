@@ -54,7 +54,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     HttpClientModule,
     DataTablesModule,
     NgSelectModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    UserpageModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

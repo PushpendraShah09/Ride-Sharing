@@ -205,6 +205,18 @@ export class RiderpageComponent implements OnInit {
 
     this.initMarkers();
     this.RouteLocation();
+
+    this.hs.toast({
+      title: 'Success!',
+      text: 'Ride request accepted !',
+      icon: 'success',
+      toast: true,
+      position: 'top-end',
+      timer: 2000,
+      showConfirmButton: false,
+    });
+    
+    this.SendMail();
       });
   }
 
@@ -231,6 +243,15 @@ export class RiderpageComponent implements OnInit {
       )
       .then((resp) => {
         console.log(resp);
+        this.hs.toast({
+          title: 'Success!',
+          text: 'Ride request rejected !',
+          icon: 'info',
+          toast: true,
+          position: 'top-end',
+          timer: 2000,
+          showConfirmButton: false,
+        });
       });
   }
 
@@ -255,6 +276,70 @@ export class RiderpageComponent implements OnInit {
           },
         }
       )
+      .then((resp) => {
+        console.log(resp);
+
+        this.hs.toast({
+          title: 'Success!',
+          text: 'You have completed the ride successfully!',
+          icon: 'success',
+          toast: true,
+          position: 'top-end',
+          timer: 2000,
+          showConfirmButton: false,
+        });
+        
+        this.router.navigateByUrl('/riderpage');
+        
+      });
+  }
+
+  SendMail() {
+    var MailBody =
+      'Dear ' +
+      this.GetRideForRider[0].username +
+      '\nWelcome to RideShare, This mail is to inform you that your Ride from ' +this.GetRideForRider[0].fromlocation+ ' to ' +this.GetRideForRider[0].tolocation+ ' is Approved.\n\n' +
+      'Your Rider : '+this.RiderInfo[0].name+ ' and contact no. : ' +this.RiderInfo[0].mobileno+ ' will reach to you in sometime\n\n'
+      +
+      'Thank you for choosing RideShare. We look forward to providing you with a seamless ride-sharing experience. Welcome aboard!\n\n' +
+      'Best regards,\n' +
+      'Ride Sharing\n';
+
+    debugger;
+    this.hs
+      .ajax('SendMail', 'http://schemas.cordys.com/1.0/email', {
+        to: {
+          address: {
+            emailAddress: 'pushpendras@adnatesolutions.com',
+            displayName: this.GetRideForRider.username ,
+          },
+        },
+        // cc: {
+        //   address: {
+        //     displayName: PARAMETER,
+        //     emailAddress: PARAMETER,
+        //   }
+        // },
+        // bcc: {
+        //   address: {
+        //     displayName: PARAMETER,
+        //     emailAddress: PARAMETER,
+        //   }
+        // },
+        subject: 'Ride Confirmation',
+        body: MailBody,
+        // attachments: {
+        //   attachment: PARAMETER,
+        // },
+        from: {
+          displayName: 'Ride Sharing',
+          emailAddress: 'pushpendras@adnatesolutions.com',
+          replyTo: 'It is a auto generated mail, You can not reply to it.',
+        },
+        // headers: {
+        //   header: PARAMETER,
+        // }
+      })
       .then((resp) => {
         console.log(resp);
       });

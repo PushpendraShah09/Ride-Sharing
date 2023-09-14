@@ -52,38 +52,72 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('UserName', this.data.user);
         this.GetUserDetails();
       });
-      
   }
 
   UserData: any;
-  UserRole: any;
+  UserRole: any ;
   GetUserDetails() {
     this.service.GetUserDetails({ UserName: this.data.user }).then((resp) => {
       console.log(resp);
       this.UserData = this.hs.xmltojson(resp, 'Roles');
       debugger;
-      this.UserRole = this.UserData[0].Role[5].text;
+      //this.UserRole = this.UserData[0].Role[5].text;
+      //this.UserRole = this.UserData[0].Role[0].text;
       localStorage.setItem('userRole', this.UserRole);
-      if (this.UserRole == 'RiderRS') {
+
+     for (let index = 0; index < this.UserData[0].Role.length; index++) {
+      if (this.UserData[0].Role[index].text == 'RiderRS') {
+        this.UserRole = this.UserData[0].Role[index].text
+        localStorage.setItem('userRole', this.UserRole);
+
         this.router.navigateByUrl('/riderpage');
         this.hs.callToggle.next(this.UserRole);
-      } else if (this.UserRole == 'userRS') {
-        this.router.navigateByUrl('/userpage');
+        
+
+        this.hs.toast({
+          title: 'Success!',
+          text: 'Log In successfully',
+          icon: 'success',
+          toast: true,
+          position: 'top-end',
+          timer: 2000,
+          showConfirmButton: false,
+        });
+      } else if (this.UserData[0].Role[index].text == 'userRS') {
+
+        this.UserRole = this.UserData[0].Role[index].text
+        localStorage.setItem('userRole', this.UserRole);
+
+        this.router.navigateByUrl('/userpage')
         this.hs.callToggle.next(this.UserRole);
-      } else if (this.UserRole == 'AdimnRS') {
+        this.hs.toast({
+          title: 'Success!',
+          text: 'Log In successfully',
+          icon: 'success',
+          toast: true,
+          position: 'top-end',
+          timer: 2000,
+          showConfirmButton: false,
+        });
+      } else if (this.UserData[0].Role[index].text == 'AdimnRS') {
+
+        this.UserRole = this.UserData[0].Role[index].text
+        localStorage.setItem('userRole', this.UserRole);
+
         this.router.navigateByUrl('/adminpage');
         this.hs.callToggle.next(this.UserRole);
-      }
-    });
 
-    this.hs.toast({
-      title: 'Success!',
-      text: 'Log In successfully',
-      icon: 'success',
-      toast: true,
-      position: 'top-end',
-      timer: 2000,
-      showConfirmButton: false,
+        this.hs.toast({
+          title: 'Success!',
+          text: 'Log In successfully',
+          icon: 'success',
+          toast: true,
+          position: 'top-end',
+          timer: 2000,
+          showConfirmButton: false,
+        });
+      }
+     }
     });
   }
 
@@ -92,14 +126,17 @@ export class LoginComponent implements OnInit {
     const that = this;
 
     $.cordys.authentication.sso
-      .authenticate('sysadmin', 'sys@admin')
+      .authenticate('pushpendra', 'pushpendra')
       .done((resp: any) => {});
+
+      //that.CreateUser();
 
     setTimeout(() => {
       that.CreateUser();
-    }, 3000);
+    }, 2000);
   }
 
+  NewRoleUser:any;
   CreateUser() {
     debugger;
     this.hs
@@ -123,8 +160,9 @@ export class LoginComponent implements OnInit {
           },
         }
       )
-      .then((resp) => {
+      .then((resp:any) => {
         console.log(resp);
+        this.NewRoleUser = resp.User.Roles.Role
         // alert('User_User');
         setTimeout(() => {
           this.SendMail();
@@ -134,29 +172,25 @@ export class LoginComponent implements OnInit {
 
   /* Send Mail Service */
   SendMail() {
-
-    var MailBody = 'Dear ' + this.NewUser.username +
-    '\nWelcome to RideShare, your trusted partner for convenient and affordable rides! We are excited to have you on board and ready to provide you with the best ride-sharing experience.\n\n'
-    +
-    'Name : ' +this.NewUser.username+';\n' +
-    'Email : ' +this.NewUser.email+';\n\n'
-    +
-    'To get started with RideShare, log in using your registered User Id and password. With RideShare, you can:\n\n'
-    +
-    '- Easily book a ride anytime, anywhere\n'+
-    '- Choose from a variety of vehicle options\n'+
-    '- Track your ride in real-time\n'+
-    '- Pay securely using your preferred payment method\n'+
-    '- Rate and review your drivers\n\n'
-    +
-    'Thank you for choosing RideShare. We look forward to providing you with a seamless ride-sharing experience. Welcome aboard!\n\n'
-    +
-    'Best regards,\n'
-    +
-    'Ride Sharing\n';
-
-
-
+    var MailBody =
+      'Dear ' +
+      this.NewUser.username +
+      '\nWelcome to RideShare, your trusted partner for convenient and affordable rides! We are excited to have you on board and ready to provide you with the best ride-sharing experience.\n\n' +
+      'Name : ' +
+      this.NewUser.username +
+      ';\n' +
+      'Email : ' +
+      this.NewUser.email +
+      ';\n\n' +
+      'To get started with RideShare, log in using your registered User Id and password. With RideShare, you can:\n\n' +
+      '- Easily book a ride anytime, anywhere\n' +
+      '- Choose from a variety of vehicle options\n' +
+      '- Track your ride in real-time\n' +
+      '- Pay securely using your preferred payment method\n' +
+      '- Rate and review your drivers\n\n' +
+      'Thank you for choosing RideShare. We look forward to providing you with a seamless ride-sharing experience. Welcome aboard!\n\n' +
+      'Best regards,\n' +
+      'Ride Sharing\n';
 
     debugger;
     this.hs
@@ -197,7 +231,4 @@ export class LoginComponent implements OnInit {
         console.log(resp);
       });
   }
-
-  
-
 }

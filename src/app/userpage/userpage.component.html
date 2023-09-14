@@ -110,11 +110,11 @@
           Calculate Route
         </button> -->
 
-        <button class="btn btn-primary mb-5 me-2" (click)="RequestForRide()">
+        <button class="btn btn-primary mb-5 me-2" [disabled]="bookRideFlag" (click)="RequestForRide()">
           Book Ride
         </button>
 
-        <button class="btn btn-primary mb-5" (click)="CancelRide()">
+        <button class="btn btn-primary mb-5" [disabled]="cancelFlag" (click)="CancelRide()">
          Cancel Ride
         </button>
       </div>

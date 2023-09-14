@@ -6,10 +6,9 @@ import { AdminpageRoutingModule } from './adminpage-routing.module';
 import { AdminpageComponent } from './adminpage.component';
 import { DataTablesModule } from 'angular-datatables';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { CustomDatePipe } from '../custom-date.pipe';
 
 @NgModule({
-  declarations: [AdminpageComponent, CustomDatePipe],
+  declarations: [AdminpageComponent],
   imports: [
     CommonModule,
     FormsModule,

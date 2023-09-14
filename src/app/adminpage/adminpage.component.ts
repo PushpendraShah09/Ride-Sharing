@@ -451,7 +451,7 @@ export class AdminpageComponent implements OnInit {
   searchText: any;
   applySearchFilter() {
     debugger;
-    this.filteredTableData = this.tableData.filter(
+    this.filteredTableData =  this.UserDetails.filter(
       (item: { [x: string]: any }) => {
         return Object.keys(item).some((key) => {
           const value = (item[key] || '').toString().toLowerCase();
