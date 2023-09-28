@@ -33,10 +33,10 @@
               }
             ],
             "styles": [
-              "src/styles.scss",
-              "node_modules/datatables.net-dt/css/jquery.dataTables.css"
+              "src/styles.scss"
+            
             ],
-            "scripts": ["node_modules/datatables.net/js/jquery.dataTables.js"]
+            "scripts": []
           },
           "configurations": {
             "production": {

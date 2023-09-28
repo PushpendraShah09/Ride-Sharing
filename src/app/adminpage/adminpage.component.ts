@@ -3,6 +3,7 @@ import { HeroService } from '../hero.service';
 import { Router } from '@angular/router';
 import { Chart } from 'chart.js/auto';
 import { CordysServiceService } from '../cordys-service.service';
+declare var $: any;
 
 @Component({
   selector: 'app-adminpage',
@@ -24,13 +25,26 @@ export class AdminpageComponent implements OnInit {
   ngOnInit(): void {
     this.City_wise_distribution_of_the_rides();
     this.Best_and_worst_rated_drivers_in_each_city_with_details();
+    this.BestRatedDrivers();
+    this.toggle(9);
   }
 
   array: any;
+  array1: any;
+  array2: any;
+
   CityWiseRide: any = [{}];
   city: any = [];
   Complete: any = [];
   Cancel: any = [];
+
+  city1: any = [];
+  Complete1: any = [];
+  Cancel1: any = [];
+
+  city2: any = [];
+  Complete2: any = [];
+  Cancel2: any = [];
   City_wise_distribution_of_the_rides() {
     const that = this;
     this.array = ['Complete', 'Cancel'];
@@ -63,7 +77,7 @@ export class AdminpageComponent implements OnInit {
   Vehicle_category_wise_ride_distribution() {
     const that = this;
 
-    this.array = ['Complete', 'Cancel'];
+    this.array1 = ['Complete', 'Cancel'];
 
     debugger;
     this.hs
@@ -81,17 +95,17 @@ export class AdminpageComponent implements OnInit {
         );
         console.log('CityWiseRide =>', that.CityWiseRide);
         for (let i = 0; i < this.CityWiseRide.length; i++) {
-          this.city.push(this.CityWiseRide[i].vehiclecatogry);
-          this.Complete.push(this.CityWiseRide[i].complete);
-          this.Cancel.push(this.CityWiseRide[i].cancel);
+          this.city1.push(this.CityWiseRide[i].vehiclecatogry);
+          this.Complete1.push(this.CityWiseRide[i].complete);
+          this.Cancel1.push(this.CityWiseRide[i].cancel);
         }
-        this.createChart();
+        this.createChart1();
       });
   }
 
   Rides_with_maximum_and_minimum_fares_in_each_city() {
     const that = this;
-    this.array = ['Max Fare', 'Min Fare'];
+    this.array2 = ['Max Fare', 'Min Fare'];
     this.hs
       .ajax(
         'Rides_with_maximum_and_minimum_fares_in_each_city',
@@ -107,11 +121,11 @@ export class AdminpageComponent implements OnInit {
         );
         console.log('CityWiseRide =>', that.CityWiseRide);
         for (let i = 0; i < this.CityWiseRide.length; i++) {
-          this.city.push(this.CityWiseRide[i].currentcity);
-          this.Complete.push(this.CityWiseRide[i].max_fare);
-          this.Cancel.push(this.CityWiseRide[i].min_fare);
+          this.city2.push(this.CityWiseRide[i].currentcity);
+          this.Complete2.push(this.CityWiseRide[i].max_fare);
+          this.Cancel2.push(this.CityWiseRide[i].min_fare);
         }
-        this.createChart();
+        this.createChart2();
       });
   }
 
@@ -149,32 +163,118 @@ export class AdminpageComponent implements OnInit {
     });
   }
 
-  isValue: number = 1;
+  createChart1() {
+    this.ctx = document.getElementById('myChart1');
+
+    this.myChart = new Chart(this.ctx, {
+      type: 'bar',
+      data: {
+        labels: this.city1,
+        datasets: [
+          {
+            label: this.array1[0],
+            data: this.Complete1,
+            backgroundColor: 'blue',
+          },
+          {
+            label: this.array1[1],
+            data: this.Cancel1,
+            backgroundColor: 'limegreen',
+          },
+        ],
+      },
+      options: {
+        scales: {
+          y: {
+            //beginAtZero: true,
+            suggestedMin: 0,
+            suggestedMax: 5,
+          },
+        },
+      },
+    });
+  }
+
+  createChart2() {
+    this.ctx = document.getElementById('myChart2');
+
+    this.myChart = new Chart(this.ctx, {
+      type: 'bar',
+      data: {
+        labels: this.city2,
+        datasets: [
+          {
+            label: this.array2[0],
+            data: this.Complete2,
+            backgroundColor: 'blue',
+          },
+          {
+            label: this.array2[1],
+            data: this.Cancel2,
+            backgroundColor: 'limegreen',
+          },
+        ],
+      },
+      options: {
+        scales: {
+          y: {
+            //beginAtZero: true,
+            suggestedMin: 0,
+            suggestedMax: 5,
+          },
+        },
+      },
+    });
+  }
+
+  isValue: number = 9;
   toggle(val: any) {
     this.isValue = val;
-    if (this.isValue == 1) {
-      this.city = [];
-      this.Complete = [];
-      this.Cancel = [];
-      this.City_wise_distribution_of_the_rides();
-    }
-    if (this.isValue == 2) {
-      this.city = [];
-      this.Complete = [];
-      this.Cancel = [];
-      this.Vehicle_category_wise_ride_distribution();
-    }
-    if (this.isValue == 4) {
-      this.city = [];
-      this.Complete = [];
-      this.Cancel = [];
-      this.Rides_with_maximum_and_minimum_fares_in_each_city();
-    }
+    // if (this.isValue == 1) {
+    //   this.city = [];
+    //   this.Complete = [];
+    //   this.Cancel = [];
+    //   this.City_wise_distribution_of_the_rides();
+    // }
+    // if (this.isValue == 2) {
+    //   this.city = [];
+    //   this.Complete = [];
+    //   this.Cancel = [];
+    //   this.Vehicle_category_wise_ride_distribution();
+    // }
+    // if (this.isValue == 4) {
+    //   this.city = [];
+    //   this.Complete = [];
+    //   this.Cancel = [];
+    //   this.Rides_with_maximum_and_minimum_fares_in_each_city();
+    // }
     if (this.isValue == 6) {
       this.GetUser_master_ridesharingObjects();
     }
     if (this.isValue == 7) {
       this.GetRider_master_ridesharingObjects();
+    }
+    if (this.isValue == 8) {
+      this.GetVehicleAllData();
+    }
+    if (this.isValue == 9) {
+      this.city = [];
+      this.Complete = [];
+      this.Cancel = [];
+
+      this.city1 = [];
+      this.Complete1 = [];
+      this.Cancel1 = [];
+
+      this.city2 = [];
+      this.Complete2 = [];
+      this.Cancel2 = [];
+      this.City_wise_distribution_of_the_rides();
+      this.Vehicle_category_wise_ride_distribution();
+      this.Rides_with_maximum_and_minimum_fares_in_each_city();
+    }
+    if (this.isValue == 10) {
+      //this.GetVehicleAllData();
     }
   }
 
@@ -424,6 +524,7 @@ export class AdminpageComponent implements OnInit {
       .then((resp: any) => {
         this.UserDetails = this.hs.xmltojson(resp, 'user_master_ridesharing');
         console.log('Getuserdetails =>', this.UserDetails);
+        this.filteredTableData = this.UserDetails;
       });
   }
 
@@ -443,6 +544,7 @@ export class AdminpageComponent implements OnInit {
       .then((resp: any) => {
         this.RiderDetails = this.hs.xmltojson(resp, 'rider_master_ridesharing');
         console.log('GetRiderdetails =>', this.UserDetails);
+        this.filteredTableData = this.RiderDetails;
       });
   }
 
@@ -451,7 +553,31 @@ export class AdminpageComponent implements OnInit {
   searchText: any;
   applySearchFilter() {
     debugger;
-    this.filteredTableData =  this.UserDetails.filter(
+    this.filteredTableData = this.UserDetails.filter(
+      (item: { [x: string]: any }) => {
+        return Object.keys(item).some((key) => {
+          const value = (item[key] || '').toString().toLowerCase();
+          return value.includes(this.searchText.toLowerCase());
+        });
+      }
+    );
+  }
+
+  applySearchFilter1() {
+    debugger;
+    this.filteredTableData = this.RiderDetails.filter(
+      (item: { [x: string]: any }) => {
+        return Object.keys(item).some((key) => {
+          const value = (item[key] || '').toString().toLowerCase();
+          return value.includes(this.searchText.toLowerCase());
+        });
+      }
+    );
+  }
+
+  applySearchFilter2() {
+    debugger;
+    this.filteredTableData = this.VehicleData.filter(
       (item: { [x: string]: any }) => {
         return Object.keys(item).some((key) => {
           const value = (item[key] || '').toString().toLowerCase();
@@ -492,11 +618,348 @@ export class AdminpageComponent implements OnInit {
         this.cancelRideD = this.hs.xmltojson(
           resp,
           'ride_transition_ridesharing'
-
         );
-        debugger
+        debugger;
+        $('#CRModal').modal('show');
       });
   }
 
+  // Get reports of No of rides in a duration
+  DateInput2: any = {};
+  FileType: any = 'PDF';
+  No_Of_Rides_In_a_Duration(DateInput2: any) {
+    this.DateInput2.startDate = this.formatDate(DateInput2.startDate);
+    this.DateInput2.endDate = this.formatDate(DateInput2.endDate);
 
+    const PARAM1 = {
+      PARAM: {
+        Name: 'StartDate',
+        Value: this.DateInput2.startDate,
+      },
+    };
+
+    const PARAM2 = {
+      PARAM: {
+        Name: 'EndDate',
+        Value: this.DateInput2.endDate,
+      },
+    };
+
+    const paramsArray = [];
+    paramsArray.push([PARAM1, PARAM2]);
+
+    if (this.FileType == 'PDF') {
+      debugger;
+      this.hs
+        .ajax('GetReport', 'http://schemas.cordys.com/BIRT/', {
+          ReportName: 'NoOfRidesInDuration.rptdesign',
+          OutputFormat: 'pdf',
+          Embeddable: 'false',
+          OutputToFile: 'true',
+          EncodeFile: 'false',
+          PARAMS: {
+            PARAM: {
+              paramsArray,
+            },
+          },
+        })
+        .then((resp: any) => {
+          this.FileName = resp.PhysicalLink.split('/');
+          this.FileName = this.FileName[4];
+
+          debugger;
+          this.DownloadFileFromServer();
+        });
+    } else {
+      this.hs
+        .ajax('GetReport', 'http://schemas.cordys.com/BIRT/', {
+          ReportName: 'NoOfRidesInDuration.rptdesign',
+          OutputFormat: 'xls',
+          Embeddable: 'false',
+          OutputToFile: 'true',
+          EncodeFile: 'false',
+          PARAMS: {
+            PARAM: {
+              paramsArray,
+            },
+          },
+        })
+        .then((resp: any) => {
+          this.FileName = resp.PhysicalLink.split('/');
+          this.FileName = this.FileName[4];
+
+          debugger;
+          this.DownloadFileFromServer();
+        });
+    }
+  }
+
+  // Report of No_of_cancelled_rides_in_a_duration
+  DateInput1: any = {};
+  CancelFileType: any = 'PDF';
+  No_of_cancelled_rides_in_a_duration(DateInput1: any) {
+    this.DateInput1.startDate = this.formatDate(DateInput1.startDate);
+    this.DateInput1.endDate = this.formatDate(DateInput1.endDate);
+
+    const PARAM1 = {
+      PARAM: {
+        Name: 'StartDate',
+        Value: this.DateInput1.startDate,
+      },
+    };
+
+    const PARAM2 = {
+      PARAM: {
+        Name: 'EndDate',
+        Value: this.DateInput1.endDate,
+      },
+    };
+
+    const paramsArray = [];
+    paramsArray.push([PARAM1, PARAM2]);
+
+    if (this.CancelFileType == 'PDF') {
+      debugger;
+      this.hs
+        .ajax('GetReport', 'http://schemas.cordys.com/BIRT/', {
+          ReportName: 'NoOfCancelRidesInDuration.rptdesign',
+          OutputFormat: 'pdf',
+          Embeddable: 'false',
+          OutputToFile: 'true',
+          EncodeFile: 'false',
+          PARAMS: {
+            PARAM: {
+              paramsArray,
+            },
+          },
+        })
+        .then((resp: any) => {
+          this.FileName = resp.PhysicalLink.split('/');
+          this.FileName = this.FileName[4];
+
+          debugger;
+          this.DownloadFileFromServer();
+        });
+    } else {
+      this.hs
+        .ajax('GetReport', 'http://schemas.cordys.com/BIRT/', {
+          ReportName: 'NoOfCancelRidesInDuration.rptdesign',
+          OutputFormat: 'xls',
+          Embeddable: 'false',
+          OutputToFile: 'true',
+          EncodeFile: 'false',
+          PARAMS: {
+            PARAM: {
+              paramsArray,
+            },
+          },
+        })
+        .then((resp: any) => {
+          this.FileName = resp.PhysicalLink.split('/');
+          this.FileName = this.FileName[4];
+
+          debugger;
+          this.DownloadFileFromServer();
+        });
+    }
+  }
+
+  VehicleData: any = [{}];
+  GetVehicleAllData() {
+    debugger;
+    this.hs
+      .ajax(
+        'GetVehicleAllData',
+        'http://schemas.cordys.com/WSAppServerPackageRS',
+        {}
+      )
+      .then((resp) => {
+        console.log(resp);
+
+        this.VehicleData = this.hs.xmltojson(
+          resp,
+          'vehicle_master_ridesharing'
+        );
+        this.filteredTableData = this.VehicleData;
+        console.log('Vehicle Data => ', this.VehicleData);
+      });
+  }
+
+  vehicleCategory: string = '';
+  vehicleType: string = '';
+  AddVehicle() {
+    debugger;
+    this.hs
+      .ajax(
+        'AddVehicleMaster',
+        'http://schemas.cordys.com/WSAppServerPackageRS',
+        {
+          Category: this.vehicleCategory,
+          Type: this.vehicleType,
+        }
+      )
+      .then((resp: any) => {
+        console.log(resp);
+        debugger;
+
+        this.GetVehicleAllData();
+
+        this.hs.toast({
+          title: 'Success!',
+          text: 'Vehicle added Successfully.',
+          icon: 'success',
+          toast: true,
+          position: 'top-end',
+          timer: 2000,
+          showConfirmButton: false,
+        });
+      });
+  }
+
+  EditRow: any = [{}];
+  editVehicle(item: any) {
+    debugger;
+    console.log('Editing row:', item);
+    this.EditRow = item;
+    $('#EditModal').modal('show');
+  }
+
+  EditVehicleData() {
+    debugger;
+    this.hs
+      .ajax(
+        'UpdateVehicle_master_ridesharing',
+        'http://schemas.cordys.com/WSAppServerPackageRS',
+        {
+          tuple: {
+            old: {
+              vehicle_master_ridesharing: {
+                id: this.EditRow.id,
+              },
+            },
+            new: {
+              vehicle_master_ridesharing: {
+                category: this.EditRow.category,
+                type: this.EditRow.type,
+              },
+            },
+          },
+        }
+      )
+      .then((resp: any) => {
+        console.log(resp);
+        debugger;
+
+        this.GetVehicleAllData();
+
+        this.hs.toast({
+          title: 'Success!',
+          text: 'Vehicle Data Edited Successfully.',
+          icon: 'success',
+          toast: true,
+          position: 'top-end',
+          timer: 2000,
+          showConfirmButton: false,
+        });
+      });
+  }
+
+  DeleteRow: any = [{}];
+  deleteVehicle(item: any) {
+    console.log('Deleting row:', item);
+    this.DeleteRow = item;
+    $('#DeleteModal').modal('show');
+  }
+
+  DeleteVehicleData() {
+    this.hs
+      .ajax(
+        'UpdateVehicle_master_ridesharing',
+        'http://schemas.cordys.com/WSAppServerPackageRS',
+        {
+          tuple: {
+            old: {
+              vehicle_master_ridesharing: {
+                id: this.DeleteRow.id,
+              },
+            },
+          },
+        }
+      )
+      .then((resp: any) => {
+        console.log(resp);
+        debugger;
+
+        this.GetVehicleAllData();
+
+        this.hs.toast({
+          title: 'Success!',
+          text: 'Vehicle data deleted Successfully.',
+          icon: 'success',
+          toast: true,
+          position: 'top-end',
+          timer: 2000,
+          showConfirmButton: false,
+        });
+      });
+  }
+
+  //Best Rated Driver List
+  BestRatingsInfo: any;
+  BestRatedDrivers() {
+    debugger;
+    this.hs
+      .ajax(
+        'BestRatedDrivers',
+        'http://schemas.cordys.com/WSAppServerPackageRS',
+        {}
+      )
+      .then((resp) => {
+        this.BestRatingsInfo = this.hs.xmltojson(
+          resp,
+          'ride_transition_ridesharing'
+        );
+        console.log('Best Rated Driver Info ->', this.BestRatingsInfo);
+      });
+  }
+
+  BestRatedDriverListPDF() {
+    const that = this;
+    debugger;
+    this.hs
+      .ajax('GetReport', 'http://schemas.cordys.com/BIRT/', {
+        ReportName: 'BestRatedDrivers.rptdesign',
+        OutputFormat: 'pdf',
+        Embeddable: 'false',
+        OutputToFile: 'true',
+        EncodeFile: 'false',
+      })
+      .then((resp: any) => {
+        this.FileName = resp.PhysicalLink.split('/');
+        this.FileName = this.FileName[4];
+
+        debugger;
+        this.DownloadFileFromServer();
+      });
+  }
+
+  BestRatedDriverListXLS() {
+    const that = this;
+    debugger;
+    this.hs
+      .ajax('GetReport', 'http://schemas.cordys.com/BIRT/', {
+        ReportName: 'BestRatedDrivers.rptdesign',
+        OutputFormat: 'xls',
+        Embeddable: 'false',
+        OutputToFile: 'true',
+        EncodeFile: 'false',
+      })
+      .then((resp: any) => {
+        this.FileName = resp.PhysicalLink.split('/');
+        this.FileName = this.FileName[4];
+
+        debugger;
+        this.DownloadFileFromServer();
+      });
+  }
 }

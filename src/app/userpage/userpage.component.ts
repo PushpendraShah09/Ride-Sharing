@@ -459,7 +459,7 @@ export class UserpageComponent implements OnInit {
     var formattedDate = `${day}-${month}-${year}`;
     console.log(formattedDate);
     // Current Date End
-     const that=this;
+    const that=this;
     debugger;
     this.hs
       .ajax(

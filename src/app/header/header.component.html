@@ -64,10 +64,46 @@
           >
         </div>
 
-        <div *ngIf="userRole != ''" class="item-button">
-          <a class="rounded-button" type="button" (click)="Logout()"
+        <div *ngIf="userRole != ''" class="item-button" id="profile-dropdown">
+          <a class="rounded-button" type="button" (click)="toggleDropdown()"
             ><span class="fs-5">Log out</span></a
           >
+          <div class="dropdown-menu" [ngClass]="{ show: isDropdownOpen }">
+            <div class="sub-menu">
+              <div class="user-info">
+                <img src="../../assets/Images/ProfileImg.png" />
+                <h4>{{ USERNAME }}</h4>
+              </div>
+              <hr />
+
+              <div
+                (click)="editProfile()"
+                class="sub-hover d-flex flex-row align-items-center mb-3"
+              >
+                <img
+                  class="me-3"
+                  style="width: 35px"
+                  src="../../assets/Images/ProfileImg.png"
+                />
+                <h6 class="me-5 my-0">Edit Profile</h6>
+                <span>></span>
+              </div>
+              <hr />
+
+              <div
+                (click)="Logout()"
+                class="sub-hover d-flex flex-row align-items-center"
+              >
+                <img
+                  class="ms-1 me-4"
+                  style="width: 25px"
+                  src="../../assets/Images/logOut.png"
+                />
+                <h6 class="my-0" style="margin-right: 4.5rem">Log out</h6>
+                <span>></span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -79,7 +115,7 @@
       </div>
 
       <!-- Modal -->
-      <div
+      <!-- <div
         class="modal fade"
         id="navbModal"
         tabindex="-1"
@@ -110,11 +146,6 @@
                 <i class="fa-solid fa-circle-info"></i>
                 <a href="">Rides</a>
               </div>
-
-              <!-- <div class="modal-line">
-                <i class="fa-solid fa-address-book"></i>
-                <a href="">Contact</a>
-              </div> -->
 
               <a
                 *ngIf="userRole == null"
@@ -149,6 +180,295 @@
               ></a>
             </div>
           </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<!-- User Modal -->
+<div
+  #UserInfoModal
+  class="modal fade"
+  id="UserInfoModal"
+  tabindex="-1"
+  aria-labelledby="UserInfoModalLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="UserInfoModalLabel">Update Profile</h1>
+      </div>
+
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="ID" class="form-label">ID</label>
+              <input
+                type="text"
+                class="form-control"
+                id="ID"
+                placeholder="Enter ID"
+                [(ngModel)]="userInfo[0].id"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="Name" class="form-label">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="Name"
+                placeholder="Enter Name"
+                [(ngModel)]="userInfo[0].name"
+                disabled
+              />
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="MobileNumber" class="form-label">Mobile Number</label>
+              <input
+                type="number"
+                class="form-control"
+                id="MobileNumber"
+                placeholder="Enter Mobile Number"
+                [(ngModel)]="userInfo[0].mobileno"
+              />
+            </div>
+            </div>
+
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="Email" class="form-label">Email</label>
+              <input
+                type="text"
+                class="form-control"
+                id="Email"
+                placeholder="Enter Email"
+                [(ngModel)]="userInfo[0].email"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="validateInputFields()"
+        >
+          Save
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Rider Modal -->
+<div
+  class="modal fade"
+  id="RiderInfoModal"
+  tabindex="-1"
+  aria-labelledby="RiderInfoModalLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="RiderInfoModalLabel">
+          Update Profile
+        </h1>
+      </div>
+
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label for="ID" class="form-label">ID</label>
+              <input
+                type="text"
+                class="form-control"
+                id="ID"
+                placeholder="Enter ID"
+                [(ngModel)]="userInfo[0].id"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label for="Name" class="form-label">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="Name"
+                placeholder="Enter Name"
+                [(ngModel)]="userInfo[0].name"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label for="Age" class="form-label">Age</label>
+              <input
+                type="text"
+                class="form-control"
+                id="Age"
+                placeholder="Enter Age"
+                [(ngModel)]="userInfo[0].age"
+              />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label for="MobileNumber" class="form-label">Mobile Number</label>
+              <input
+                type="text"
+                class="form-control"
+                id="MobileNumber"
+                placeholder="Enter Mobile Number"
+                [(ngModel)]="userInfo[0].mobileno"
+              />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label for="Email" class="form-label">Email</label>
+              <input
+                type="text"
+                class="form-control"
+                id="Email"
+                placeholder="Enter Email"
+                [(ngModel)]="userInfo[0].email"
+              />
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label for="City" class="form-label">City</label>
+              <input
+                type="text"
+                class="form-control"
+                id="City"
+                placeholder="Enter City"
+                [(ngModel)]="userInfo[0].city"
+              />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label for="Pincode" class="form-label">Pincode</label>
+              <input
+                type="text"
+                class="form-control"
+                id="Pincode"
+                placeholder="Enter Pincode"
+                [(ngModel)]="userInfo[0].pincode"
+              />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label for="State" class="form-label">State</label>
+              <input
+                type="text"
+                class="form-control"
+                id="State"
+                placeholder="Enter State"
+                [(ngModel)]="userInfo[0].state"
+              />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label for="DrivingLicence" class="form-label"
+                >Driving Licence</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="DrivingLicence"
+                placeholder="Enter Driving Licence No."
+                [(ngModel)]="userInfo[0].drivinglicence"
+              />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label for="VehicleModel" class="form-label">Vehicle Model</label>
+              <input
+                type="text"
+                class="form-control"
+                id="VehicleModel"
+                placeholder="Enter Vehicle Model"
+                [(ngModel)]="userInfo[0].vehiclemodel"
+              />
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label for="VehicleCategory" class="form-label"
+                >Vehicle Category</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="VehicleCategory"
+                placeholder="Enter Vehicle Category"
+                [(ngModel)]="userInfo[0].vehiclecategory"
+              />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label for="VehicleNumber" class="form-label"
+                >Vehicle Number</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="VehicleNumber"
+                placeholder="Enter Vehicle Number"
+                [(ngModel)]="userInfo[0].vehicleno"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            (click)="validateInputFields()"
+          >
+            Save
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
         </div>
       </div>
     </div>

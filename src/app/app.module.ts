@@ -56,6 +56,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     NgSelectModule,
     ModalModule.forRoot(),
     UserpageModule,
+    NgxPaginationModule 
+
   ],
   providers: [],
   bootstrap: [AppComponent]

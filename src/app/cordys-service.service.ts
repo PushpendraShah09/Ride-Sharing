@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HeroService } from './hero.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -35,4 +36,12 @@ GetUserHistory  = (params: any) =>
       'http://schemas.cordys.com/WSAppServerPackageRS',
       params
     );
+
+
+    private isDropdownOpenSubject = new BehaviorSubject<boolean>(false);
+    isDropdownOpen$ = this.isDropdownOpenSubject.asObservable();
+
+    toggleDropdown(): void {
+      this.isDropdownOpenSubject.next(!this.isDropdownOpenSubject.value);
+    }
 }

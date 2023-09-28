@@ -1,80 +1,97 @@
 <div class="container-fluid">
-  <div *ngIf="UserRole == 'RiderRS'" class="container">
+  <div *ngIf="UserRole == 'RiderRS'">
     <div class="p-4">
       <div class="justify-content-between d-flex is-align-items-center">
         <div class="d-flex align-items-center">
           <h5 class="mb-0">Rider History</h5>
         </div>
-        <div class="d-flex gap-2">
-          <button (click)="GetRiderHistoryBirtXLS()" class="btn btn-primary d-block">
+        <!-- <div class="d-flex gap-2">
+          <button
+            (click)="GetRiderHistoryBirtXLS()"
+            class="btn btn-primary d-block"
+          >
             <i class="bi bi-file-excel-fill"></i>
           </button>
-          <button (click)="GetRiderHistoryBirtPDF()" class="btn btn-primary d-block">
+          <button
+            (click)="GetRiderHistoryBirtPDF()"
+            class="btn btn-primary d-block"
+          >
             <i class="bi bi-file-pdf-fill"></i>
           </button>
-        </div>
+        </div> -->
       </div>
       <hr class="homeTable-divider" />
       <div class="row">
         <div class="col-md-3 mb-3">
           <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="searchText"
-          placeholder="Search..."
-          (keyup)="applySearchFilter()"
-         
+            type="text"
+            class="form-control"
+            [(ngModel)]="searchText"
+            placeholder="Search..."
+            (keyup)="applySearchFilter()"
           />
         </div>
-        <!-- <div class="col-md-3">
-          <button class="btn btn-primary" (click)="applySearchFilter()">
-            Search
-          </button>
-        </div> -->
       </div>
+
       <table class="table table-bordered table-hover">
         <thead style="background-color: #343a40; color: white">
           <tr>
             <th>ID</th>
-            <th>Username</th>
+            <th>User Name</th>
             <th>City</th>
             <th>From Location</th>
             <th>To Location</th>
             <th>Date</th>
+            <th>Distance</th>
+            <th>Fare</th>
             <th>Ride Status</th>
-            <!-- Add more table headers as needed -->
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of filteredTableData; let i = index">
+          <tr
+            *ngFor="
+              let item of filteredTableData
+                | paginate : { itemsPerPage: 10, currentPage: p };
+              let i = index
+            "
+            (click)="onRowClickForRider(item)"
+          >
             <td>{{ item.transition_id }}</td>
-            <td>{{ item.ridername }}</td>
+            <td>{{ item.username }}</td>
             <td>{{ item.currentcity }}</td>
             <td>{{ item.fromlocation }}</td>
             <td>{{ item.tolocation }}</td>
             <td>{{ item.date }}</td>
+            <td>{{ item.distance | number : "1.2-2" }}</td>
+            <td>{{ item.ridefare | number : "1.2-2" }}</td>
             <td>{{ item.ridestatus }}</td>
-            <!-- Add more table data cells for other properties -->
           </tr>
         </tbody>
       </table>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
     </div>
   </div>
 
-  <div *ngIf="UserRole == 'userRS'" class="container">
+  <div *ngIf="UserRole == 'userRS'">
     <div class="p-4">
       <div class="justify-content-between d-flex is-align-items-center">
         <div class="d-flex align-items-center">
           <h5 class="mb-0">User History</h5>
         </div>
-        <div class="d-flex gap-2">
-          <button (click)="GetUserHistoryBirtXLS()" class="btn btn-primary d-block">
+        <!-- <div class="d-flex gap-2">
+          <button
+            (click)="GetUserHistoryBirtXLS()"
+            class="btn btn-primary d-block"
+          >
             <i class="bi bi-file-excel-fill"></i>
           </button>
-          <button (click)="GetUserHistoryBirtPDF()" class="btn btn-primary d-block">
+          <button
+            (click)="GetUserHistoryBirtPDF()"
+            class="btn btn-primary d-block"
+          >
             <i class="bi bi-file-pdf-fill"></i>
           </button>
-        </div>
+        </div> -->
       </div>
       <hr class="homeTable-divider" />
       <div class="row">
@@ -87,7 +104,7 @@
             (ngModelChange)="applySearchFilter()"
           />
         </div>
-        
+
         <!-- <div class="col-md-3">
           <button class="btn btn-primary" (click)="applySearchFilter()">Search</button>
         </div> -->
@@ -95,29 +112,392 @@
       <table class="table table-bordered table-hover">
         <thead style="background-color: #343a40; color: white">
           <tr>
-            <th>ID</th>
-            <th>Username</th>
+            <th>Ride ID</th>
+            <th>Rider Name</th>
             <th>City</th>
             <th>From Location</th>
             <th>To Location</th>
             <th>Date</th>
+            <th>Distance</th>
+            <th>Fare</th>
             <th>Ride Status</th>
-            <!-- Add more table headers as needed -->
+            <th>Rate Rider</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of filteredTableData; let i = index ">
+          <tr
+            *ngFor="
+              let item of filteredTableData
+                | paginate : { itemsPerPage: 10, currentPage: p };
+              let i = index
+            "
+            (click)="onRowClickForUser(item)"
+          >
             <td>{{ item.transition_id }}</td>
-            <td>{{ item.username  }}</td>
+            <td>{{ item.ridername }}</td>
             <td>{{ item.currentcity }}</td>
             <td>{{ item.fromlocation }}</td>
             <td>{{ item.tolocation }}</td>
             <td>{{ item.date }}</td>
+            <td>{{ item.distance | number : "1.2-2" }}</td>
+            <td>{{ item.ridefare | number : "1.2-2" }}</td>
             <td>{{ item.ridestatus }}</td>
-            <!-- Add more table data cells for other properties -->
+            <td>{{ item.rateddriver }}</td>
           </tr>
         </tbody>
       </table>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+</div>
+
+<!-- User Modal -->
+<div
+  #UerModal
+  class="modal fade"
+  id="userModal"
+  tabindex="-1"
+  aria-labelledby="userModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="userModalLabel">User Row Data</h1>
+
+        <div class="ms-auto">
+          <button
+            type="button"
+            class="btn btn-primary me-2"
+            (click)="GetUserInvoiceXLS()"
+          >
+            <i class="bi bi-file-excel-fill"></i>
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="GetUserInvoicePDF()"
+          >
+            <i class="bi bi-file-pdf-fill"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label for="ID" class="form-label">Ride ID</label>
+              <input
+                type="text"
+                class="form-control"
+                id="ID"
+                placeholder="Enter ID"
+                [(ngModel)]="UserRowData.transition_id"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label for="Name" class="form-label">Rider Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="Name"
+                placeholder="Enter Name"
+                [(ngModel)]="UserRowData.ridername"
+                disabled
+              />
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label for="City" class="form-label">City</label>
+              <input
+                type="text"
+                class="form-control"
+                id="City"
+                placeholder="Enter City"
+                [(ngModel)]="UserRowData.currentcity"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label for="FromLocation" class="form-label">From Location</label>
+              <input
+                type="text"
+                class="form-control"
+                id="FromLocation"
+                placeholder="Enter From Location"
+                [(ngModel)]="UserRowData.fromlocation"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label for="ToLocation" class="form-label">To Location</label>
+              <input
+                type="text"
+                class="form-control"
+                id="ToLocation"
+                placeholder="Enter To Location"
+                [(ngModel)]="UserRowData.tolocation"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label for="Date" class="form-label">Date</label>
+              <input
+                type="text"
+                class="form-control"
+                id="Date"
+                placeholder="Enter Date"
+                [(ngModel)]="UserRowData.date"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label for="Distance" class="form-label">Distance</label>
+              <input
+                type="text"
+                class="form-control"
+                id="Distance"
+                placeholder="Enter Distance"
+                [(ngModel)]="UserRowData.distance"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label for="RideFare" class="form-label">Ride fare</label>
+              <input
+                type="text"
+                class="form-control"
+                id="RideFare"
+                placeholder="Enter Ride Fare"
+                [(ngModel)]="UserRowData.ridefare"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label for="Status" class="form-label">Status</label>
+              <input
+                type="text"
+                class="form-control"
+                id="Status"
+                placeholder="Enter Status"
+                [(ngModel)]="UserRowData.ridestatus"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label for="RateDriver" class="form-label">Rate Driver</label>
+              <input
+                type="text"
+                class="form-control"
+                id="RateDriver"
+                placeholder="Rate Driver out of 5"
+                [(ngModel)]="UserRowData.rateddriver"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="UpdateRiderRating()"
+        >
+          Save
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Rider Modal -->
+<div
+  #RiderModal
+  class="modal fade"
+  id="RiderModal"
+  tabindex="-1"
+  aria-labelledby="RiderModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="RiderModalLabel">Rider Row Data</h1>
+
+        <div class="ms-auto">
+          <button
+            type="button"
+            class="btn btn-primary me-2"
+            (click)="GetRiderInvoiceXLS()"
+          >
+            <i class="bi bi-file-excel-fill"></i>
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="GetRiderInvoicePDF()"
+          >
+            <i class="bi bi-file-pdf-fill"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label for="ID" class="form-label">Ride ID</label>
+              <input
+                type="text"
+                class="form-control"
+                id="ID"
+                placeholder="Enter ID"
+                [(ngModel)]="RiderRowData.transition_id"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label for="Name" class="form-label">User Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="Name"
+                placeholder="Enter Name"
+                [(ngModel)]="RiderRowData.username"
+                disabled
+              />
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label for="City" class="form-label">City</label>
+              <input
+                type="text"
+                class="form-control"
+                id="City"
+                placeholder="Enter City"
+                [(ngModel)]="RiderRowData.currentcity"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label for="FromLocation" class="form-label">From Location</label>
+              <input
+                type="text"
+                class="form-control"
+                id="FromLocation"
+                placeholder="Enter From Location"
+                [(ngModel)]="RiderRowData.fromlocation"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label for="ToLocation" class="form-label">To Location</label>
+              <input
+                type="text"
+                class="form-control"
+                id="ToLocation"
+                placeholder="Enter To Location"
+                [(ngModel)]="RiderRowData.tolocation"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label for="Date" class="form-label">Date</label>
+              <input
+                type="text"
+                class="form-control"
+                id="Date"
+                placeholder="Enter Date"
+                [(ngModel)]="RiderRowData.date"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label for="Distance" class="form-label">Distance</label>
+              <input
+                type="text"
+                class="form-control"
+                id="Distance"
+                placeholder="Enter Distance"
+                [(ngModel)]="RiderRowData.distance"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label for="RideFare" class="form-label">Ride fare</label>
+              <input
+                type="text"
+                class="form-control"
+                id="RideFare"
+                placeholder="Enter Ride Fare"
+                [(ngModel)]="RiderRowData.ridefare"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label for="Status" class="form-label">Status</label>
+              <input
+                type="text"
+                class="form-control"
+                id="Status"
+                placeholder="Enter Status"
+                [(ngModel)]="RiderRowData.ridestatus"
+                disabled
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <!-- <button type="button" class="btn btn-primary">Save</button> -->
+      </div>
     </div>
   </div>
 </div>

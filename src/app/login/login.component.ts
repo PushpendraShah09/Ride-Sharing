@@ -9,12 +9,14 @@ declare var $: any;
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
+
 export class LoginComponent implements OnInit {
   constructor(
     public hs: HeroService,
     public router: Router,
     private service: CordysServiceService
   ) {}
+
   ngOnInit(): void {
     const sign_in_btn = document.querySelector('#sign-in-btn');
     const sign_up_btn = document.querySelector('#sign-up-btn');
@@ -41,7 +43,7 @@ export class LoginComponent implements OnInit {
     password: '',
     role: '',
   };
-
+  
   login(data: any) {
     debugger;
     const that = this;
@@ -55,7 +57,7 @@ export class LoginComponent implements OnInit {
   }
 
   UserData: any;
-  UserRole: any ;
+  UserRole: any;
   GetUserDetails() {
     this.service.GetUserDetails({ UserName: this.data.user }).then((resp) => {
       console.log(resp);
@@ -65,59 +67,56 @@ export class LoginComponent implements OnInit {
       //this.UserRole = this.UserData[0].Role[0].text;
       localStorage.setItem('userRole', this.UserRole);
 
-     for (let index = 0; index < this.UserData[0].Role.length; index++) {
-      if (this.UserData[0].Role[index].text == 'RiderRS') {
-        this.UserRole = this.UserData[0].Role[index].text
-        localStorage.setItem('userRole', this.UserRole);
+      for (let index = 0; index < this.UserData[0].Role.length; index++) {
+        if (this.UserData[0].Role[index].text == 'RiderRS') {
+          this.UserRole = this.UserData[0].Role[index].text;
+          localStorage.setItem('userRole', this.UserRole);
 
-        this.router.navigateByUrl('/riderpage');
-        this.hs.callToggle.next(this.UserRole);
-        
+          this.router.navigateByUrl('/riderpage');
+          this.hs.callToggle.next(this.UserRole);
 
-        this.hs.toast({
-          title: 'Success!',
-          text: 'Log In successfully',
-          icon: 'success',
-          toast: true,
-          position: 'top-end',
-          timer: 2000,
-          showConfirmButton: false,
-        });
-      } else if (this.UserData[0].Role[index].text == 'userRS') {
+          this.hs.toast({
+            title: 'Success!',
+            text: 'Log In successfully',
+            icon: 'success',
+            toast: true,
+            position: 'top-end',
+            timer: 2000,
+            showConfirmButton: false,
+          });
+        } else if (this.UserData[0].Role[index].text == 'userRS') {
+          this.UserRole = this.UserData[0].Role[index].text;
+          localStorage.setItem('userRole', this.UserRole);
 
-        this.UserRole = this.UserData[0].Role[index].text
-        localStorage.setItem('userRole', this.UserRole);
+          this.router.navigateByUrl('/userpage');
+          this.hs.callToggle.next(this.UserRole);
+          this.hs.toast({
+            title: 'Success!',
+            text: 'Log In successfully',
+            icon: 'success',
+            toast: true,
+            position: 'top-end',
+            timer: 2000,
+            showConfirmButton: false,
+          });
+        } else if (this.UserData[0].Role[index].text == 'AdimnRS') {
+          this.UserRole = this.UserData[0].Role[index].text;
+          localStorage.setItem('userRole', this.UserRole);
 
-        this.router.navigateByUrl('/userpage')
-        this.hs.callToggle.next(this.UserRole);
-        this.hs.toast({
-          title: 'Success!',
-          text: 'Log In successfully',
-          icon: 'success',
-          toast: true,
-          position: 'top-end',
-          timer: 2000,
-          showConfirmButton: false,
-        });
-      } else if (this.UserData[0].Role[index].text == 'AdimnRS') {
+          this.router.navigateByUrl('/adminpage');
+          this.hs.callToggle.next(this.UserRole);
 
-        this.UserRole = this.UserData[0].Role[index].text
-        localStorage.setItem('userRole', this.UserRole);
-
-        this.router.navigateByUrl('/adminpage');
-        this.hs.callToggle.next(this.UserRole);
-
-        this.hs.toast({
-          title: 'Success!',
-          text: 'Log In successfully',
-          icon: 'success',
-          toast: true,
-          position: 'top-end',
-          timer: 2000,
-          showConfirmButton: false,
-        });
+          this.hs.toast({
+            title: 'Success!',
+            text: 'Log In successfully',
+            icon: 'success',
+            toast: true,
+            position: 'top-end',
+            timer: 2000,
+            showConfirmButton: false,
+          });
+        }
       }
-     }
     });
   }
 
@@ -126,17 +125,17 @@ export class LoginComponent implements OnInit {
     const that = this;
 
     $.cordys.authentication.sso
-      .authenticate('pushpendra', 'pushpendra')
+      .authenticate('sysadmin', 'sys@admin')
       .done((resp: any) => {});
 
-      //that.CreateUser();
+    //that.CreateUser();
 
     setTimeout(() => {
       that.CreateUser();
-    }, 2000);
+    }, 3000);
   }
 
-  NewRoleUser:any;
+  NewRoleUser: any;
   CreateUser() {
     debugger;
     this.hs
@@ -160,13 +159,15 @@ export class LoginComponent implements OnInit {
           },
         }
       )
-      .then((resp:any) => {
+      .then((resp: any) => {
         console.log(resp);
-        this.NewRoleUser = resp.User.Roles.Role
+        this.NewRoleUser = resp.User.Roles.Role;
         // alert('User_User');
+        this.UserDetailsSaveToDB();
+        
         setTimeout(() => {
           this.SendMail();
-        }, 3000);
+        }, 1000);
       });
   }
 
@@ -229,6 +230,67 @@ export class LoginComponent implements OnInit {
       })
       .then((resp) => {
         console.log(resp);
+        this.EmptyInputs();
       });
+  }
+
+EmptyInputs(){
+  this.NewUser.username = '';
+  this.NewUser.email = '';
+  this.NewUser.password = '';
+  this.NewUser.role = '';
+}
+
+  route:any;
+  UserDetailsSaveToDB() {
+    const that = this;
+    if (this.NewUser.role == 'userRS') {
+      debugger;
+      this.hs
+        .ajax(
+          'UpdateUser_master_ridesharing',
+          'http://schemas.cordys.com/WSAppServerPackageRS',
+          {
+            tuple: {
+              new: {
+                user_master_ridesharing: {
+                  name: this.NewUser.username,
+                  email: this.NewUser.email,
+                  role: 'User',
+                  pass: this.NewUser.password,
+                },
+              },
+            },
+          }
+        )
+        .then((resp: any) => {
+          console.log(resp);
+          debugger;
+        });
+    } else if (this.NewUser.role == 'RiderRS') {
+      debugger;
+      this.hs
+        .ajax(
+          'UpdateRider_master_ridesharing',
+          'http://schemas.cordys.com/WSAppServerPackageRS',
+          {
+            tuple: {
+              new: {
+                rider_master_ridesharing: {
+                  name: this.NewUser.username,
+                  email: this.NewUser.email,
+                  role: 'Rider',
+                  password: this.NewUser.password,
+                  availability: 'Available',
+                },
+              },
+            },
+          }
+        )
+        .then((resp: any) => {
+          console.log(resp);
+          debugger;
+        });
+    }
   }
 }

@@ -1,8 +1,13 @@
 <div class="container-fluid d-flex px-0">
-  <div class="col-3">
+  <div class="col-2.5 me-5">
     <div class="sideMenu">
       <ul class="nav flex-column">
-        <li (click)="toggle(1)" class="nav-item">
+        <li (click)="toggle(9)" class="nav-item">
+          <a class="nav-link">
+            <span class="icon"><i class="bi bi-layout-wtf"></i></span>Dashboard
+          </a>
+        </li>
+        <!-- <li (click)="toggle(1)" class="nav-item">
           <a class="nav-link">
             <span class="icon"><i class="bi bi-geo-alt"></i></span> Citywise
             Rides
@@ -30,7 +35,7 @@
             <span class="icon"><i class="bi bi-x-circle"></i></span> Rides
             Cancellation
           </a>
-        </li>
+        </li> -->
         <li (click)="toggle(6)" class="nav-item">
           <a class="nav-link">
             <span class="icon"><i class="bi bi-person-fill"></i></span> User
@@ -43,12 +48,24 @@
             Rider Details
           </a>
         </li>
+        <li (click)="toggle(8)" class="nav-item">
+          <a class="nav-link">
+            <span class="icon"><i class="fas fa-car-side"></i></span>
+            Vehicle Master
+          </a>
+        </li>
+        <li (click)="toggle(10)" class="nav-item">
+          <a class="nav-link">
+            <span class="icon"><i class="bi bi-book-fill"></i></span>
+            Reports
+          </a>
+        </li>
       </ul>
     </div>
   </div>
 
   <div class="col">
-    <div *ngIf="isValue == 1" class="container border">
+    <!-- <div *ngIf="isValue == 1" class="container border">
       <div class="Chart p-4">
         <div class="justify-content-between d-flex is-align-items-center">
           <div class="d-flex align-items-center">
@@ -67,17 +84,15 @@
             >
               <i class="bi bi-file-pdf-fill"></i>
             </button>
-            <!-- <button class="btn btn-primary d-block">
-              <i class="bi bi-eye-fill"></i>
-            </button> -->
+           
           </div>
         </div>
         <hr class="homeTable-divider" />
         <canvas id="myChart"></canvas>
       </div>
-    </div>
+    </div> -->
 
-    <div *ngIf="isValue == 2" class="container border">
+    <!-- <div *ngIf="isValue == 2" class="container border">
       <div class="Chart p-4">
         <div class="justify-content-between d-flex is-align-items-center">
           <div class="d-flex align-items-center">
@@ -96,17 +111,14 @@
             >
               <i class="bi bi-file-pdf-fill"></i>
             </button>
-            <!-- <button class="btn btn-primary d-block">
-              <i class="bi bi-eye-fill"></i>
-            </button> -->
           </div>
         </div>
         <hr class="homeTable-divider" />
         <canvas id="myChart"></canvas>
       </div>
-    </div>
+    </div> -->
 
-    <div *ngIf="isValue == 3" class="container border">
+    <!-- <div *ngIf="isValue == 3" class="container border">
       <div class="Chart p-4">
         <div class="justify-content-between d-flex is-align-items-center">
           <div class="d-flex align-items-center">
@@ -131,9 +143,6 @@
             >
               <i class="bi bi-file-pdf-fill"></i>
             </button>
-            <!-- <button class="btn btn-primary d-block">
-              <i class="bi bi-eye-fill"></i>
-            </button> -->
           </div>
         </div>
         <hr class="homeTable-divider" />
@@ -155,22 +164,22 @@
               "
             >
               <td>{{ driver.currentcity }}</td>
-              <td>{{ driver.best_rated_driver_name }}</td>
+              <td>{{ driver.best_rated_rider_name }}</td>
               <td
-                [innerHTML]="getStarRating(driver.best_driver_avg_rating)"
+                [innerHTML]="getStarRating(driver.best_rated_rider_rating)"
               ></td>
-              <td>{{ driver.worst_rated_driver_name }}</td>
+              <td>{{ driver.worst_rated_rider_name }}</td>
               <td
-                [innerHTML]="getStarRating(driver.worst_driver_avg_rating)"
+                [innerHTML]="getStarRating(driver.worst_rated_rider_rating)"
               ></td>
             </tr>
           </tbody>
         </table>
       </div>
       <pagination-controls (pageChange)="p = $event"></pagination-controls>
-    </div>
+    </div> -->
 
-    <div *ngIf="isValue == 4" class="container border">
+    <!-- <div *ngIf="isValue == 4" class="container border">
       <div class="Chart p-4">
         <div class="justify-content-between d-flex is-align-items-center">
           <div class="d-flex align-items-center">
@@ -193,17 +202,14 @@
             >
               <i class="bi bi-file-pdf-fill"></i>
             </button>
-            <!-- <button class="btn btn-primary d-block">
-              <i class="bi bi-eye-fill"></i>
-            </button> -->
           </div>
         </div>
         <hr class="homeTable-divider" />
         <canvas id="myChart"></canvas>
       </div>
-    </div>
+    </div> -->
 
-    <div *ngIf="isValue == 5" class="container border">
+    <!-- <div *ngIf="isValue == 5" class="container border">
       <div class="Chart p-4">
         <h5>Cancelled ride distribution city wise in a duration.</h5>
         <hr class="homeTable-divider" />
@@ -228,7 +234,7 @@
               [(ngModel)]="DateInput.endDate"
             />
           </div>
-          <div class="col-md-4 mt-4" >
+          <div class="col-md-4 mt-4">
             <button (click)="TriggerService(DateInput)" class="btn btn-primary">
               Search
             </button>
@@ -252,7 +258,7 @@
           </tbody>
         </table>
       </div>
-    </div>
+    </div> -->
 
     <div *ngIf="isValue == 6" class="container border">
       <div class="Chart p-4">
@@ -272,11 +278,6 @@
               (keyup)="applySearchFilter()"
             />
           </div>
-          <!-- <div class="col-md-3">
-            <button class="btn btn-primary" (click)="applySearchFilter()">
-              Search
-            </button>
-          </div> -->
         </div>
         <table class="table table-bordered table-hover table-striped">
           <thead style="background-color: #343a40; color: white">
@@ -291,7 +292,7 @@
           <tbody>
             <tr
               *ngFor="
-                let User of UserDetails
+                let User of filteredTableData
                   | paginate : { itemsPerPage: 10, currentPage: p }
               "
             >
@@ -311,7 +312,7 @@
       <div class="Chart p-4">
         <div class="justify-content-between d-flex is-align-items-center">
           <div class="d-flex align-items-center">
-            <h5 class="mb-0">User details</h5>
+            <h5 class="mb-0">Rider details</h5>
           </div>
         </div>
         <hr class="homeTable-divider" />
@@ -322,13 +323,14 @@
               class="form-control"
               [(ngModel)]="searchText"
               placeholder="Search..."
+              (keyup)="applySearchFilter1()"
             />
           </div>
-          <div class="col-md-3">
+          <!-- <div class="col-md-3">
             <button class="btn btn-primary" (click)="applySearchFilter()">
               Search
             </button>
-          </div>
+          </div> -->
         </div>
         <table class="table table-bordered table-hover table-striped">
           <thead style="background-color: #343a40; color: white">
@@ -346,7 +348,7 @@
           <tbody>
             <tr
               *ngFor="
-                let Rider of RiderDetails
+                let Rider of filteredTableData
                   | paginate : { itemsPerPage: 10, currentPage: p }
               "
             >
@@ -363,6 +365,673 @@
         </table>
       </div>
       <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+
+    <div *ngIf="isValue == 8" class="container border">
+      <div class="Chart p-4">
+        <div class="justify-content-between d-flex is-align-items-center">
+          <div class="d-flex align-items-center">
+            <h5 class="mb-0">Vehicle Master</h5>
+          </div>
+          <div class="d-flex gap-2">
+            <button
+              class="btn btn-primary d-block"
+              data-bs-toggle="modal"
+              data-bs-target="#ADDModal"
+            >
+              <i class="bi bi-file-plus"></i>
+            </button>
+          </div>
+        </div>
+        <hr class="homeTable-divider" />
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="searchText"
+              placeholder="Search..."
+              (keyup)="applySearchFilter2()"
+            />
+          </div>
+        </div>
+        <table class="table table-bordered table-hover table-striped">
+          <thead style="background-color: #343a40; color: white">
+            <tr>
+              <th scope="col">Vehicle Category</th>
+              <th scope="col">Vehicle Type</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let item of filteredTableData
+                  | paginate : { itemsPerPage: 10, currentPage: p }
+              "
+            >
+              <td>{{ item.category }}</td>
+              <td>{{ item.type }}</td>
+              <td>
+                <button
+                  class="btn btn-primary"
+                  style="margin-right: 25px"
+                  (click)="editVehicle(item)"
+                >
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button class="btn btn-danger" (click)="deleteVehicle(item)">
+                  <i class="bi bi-archive-fill"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+
+    <div *ngIf="isValue == 9" class="container">
+      <div class="row">
+        <div style="border-right: 1px solid #b1aaaa" class="col-6">
+          <div class="Chart p-4">
+            <div class="justify-content-between d-flex is-align-items-center">
+              <div class="d-flex align-items-center">
+                <h5 class="mb-0">City wise distribution of the rides</h5>
+              </div>
+              <!-- <div class="d-flex gap-2">
+                <button
+                  class="btn btn-primary d-block"
+                  (click)="GetReportForCitywisedistributionoftheridesInXLS()"
+                >
+                  <i class="bi bi-file-excel-fill"></i>
+                </button>
+                <button
+                  class="btn btn-primary d-block"
+                  (click)="GetReportForCitywisedistributionoftherides()"
+                >
+                  <i class="bi bi-file-pdf-fill"></i>
+                </button>
+              </div> -->
+            </div>
+            <hr class="homeTable-divider" />
+            <canvas id="myChart"></canvas>
+          </div>
+        </div>
+
+        <div class="col-6">
+          <div class="Chart p-4">
+            <div class="justify-content-between d-flex is-align-items-center">
+              <div class="d-flex align-items-center">
+                <h5 class="mb-0">Vehicle category wise ride distribution</h5>
+              </div>
+              <!-- <div class="d-flex gap-2">
+                <button
+                  class="btn btn-primary d-block"
+                  (click)="
+                    GetReportForVehiclecategorywiseridedistributionInXLS()
+                  "
+                >
+                  <i class="bi bi-file-excel-fill"></i>
+                </button>
+                <button
+                  class="btn btn-primary d-block"
+                  (click)="GetReportForVehiclecategorywiseridedistribution()"
+                >
+                  <i class="bi bi-file-pdf-fill"></i>
+                </button>
+              </div> -->
+            </div>
+            <hr class="homeTable-divider" />
+            <canvas id="myChart1"></canvas>
+          </div>
+        </div>
+
+        <hr class="m-0" />
+
+        <div class="col-6" style="border-right: 1px solid #b1aaaa">
+          <div class="Chart p-4">
+            <div class="justify-content-between d-flex is-align-items-center">
+              <div class="d-flex align-items-center">
+                <h5 class="mb-0">
+                  Rides with maximum and minimum fares in each city.
+                </h5>
+              </div>
+              <!-- <div class="d-flex gap-2">
+                <button
+                  class="btn btn-primary d-block"
+                  (click)="
+                    GetReportForRideswithmaximumandminimumfaresineachcityInXLS()
+                  "
+                >
+                  <i class="bi bi-file-excel-fill"></i>
+                </button>
+                <button
+                  class="btn btn-primary d-block"
+                  (click)="
+                    GetReportForRideswithmaximumandminimumfaresineachcity()
+                  "
+                >
+                  <i class="bi bi-file-pdf-fill"></i>
+                </button>
+              </div> -->
+            </div>
+            <hr class="homeTable-divider" />
+            <canvas id="myChart2"></canvas>
+          </div>
+        </div>
+
+        <div class="col-6">
+          <div class="Chart p-4">
+            <h5>Cancelled ride distribution city wise in a duration.</h5>
+            <hr class="homeTable-divider" />
+            <div class="row g-2 p-4">
+              <div class="col-6">
+                <label for="startDate">Start Date:</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="startDate"
+                  placeholder="dd-mm-yyyy"
+                  [(ngModel)]="DateInput.startDate"
+                />
+              </div>
+              <div class="col-6">
+                <label for="endDate">End Date:</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="endDate"
+                  placeholder="dd-mm-yyyy"
+                  [(ngModel)]="DateInput.endDate"
+                />
+              </div>
+              <div class="col-md-6 mt-4">
+                <button
+                  (click)="TriggerService(DateInput)"
+                  class="btn btn-primary"
+                >
+                  Search
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="m-0" />
+
+        <div class="col-12 px-0">
+          <div class="Chart px-0">
+            <div class="justify-content-between d-flex is-align-items-center">
+              <div class="d-flex align-items-center">
+                <h5 class="mb-0">
+                  Best and worst rated drivers in each city with details
+                </h5>
+              </div>
+              <!-- <div class="d-flex gap-2">
+                <button
+                  class="btn btn-primary d-block"
+                  (click)="
+                    GetReportForBestandworstrateddriversineachcitywithdetailsInXLS()
+                  "
+                >
+                  <i class="bi bi-file-excel-fill"></i>
+                </button>
+                <button
+                  class="btn btn-primary d-block"
+                  (click)="
+                    GetReportForBestandworstrateddriversineachcitywithdetails()
+                  "
+                >
+                  <i class="bi bi-file-pdf-fill"></i>
+                </button>
+              </div> -->
+            </div>
+            <hr class="homeTable-divider" />
+            <table class="table table-bordered table-hover table-striped">
+              <thead style="background-color: #343a40; color: white">
+                <tr>
+                  <th scope="col">Current City</th>
+                  <th scope="col">Best Rated Driver Name</th>
+                  <th scope="col">Best Driver Avg Rating</th>
+                  <th scope="col">Worst Rated Driver Name</th>
+                  <th scope="col">Worst Driver Avg Rating</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let driver of driverRatingData
+                      | paginate : { itemsPerPage: 5, currentPage: p }
+                  "
+                >
+                  <td>{{ driver.currentcity }}</td>
+                  <td>{{ driver.best_rated_rider_name }}</td>
+                  <td
+                    [innerHTML]="getStarRating(driver.best_rated_rider_rating)"
+                  ></td>
+                  <td>{{ driver.worst_rated_rider_name }}</td>
+                  <td
+                    [innerHTML]="getStarRating(driver.worst_rated_rider_rating)"
+                  ></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isValue == 10" class="container">
+      <div class="row">
+        <div class="col-6" style="border-right: 1px solid #b1aaaa">
+          <div class="Chart p-4">
+            <h5>No of rides in a duration</h5>
+            <hr class="homeTable-divider" />
+            <div class="row g-2 p-4">
+              <div class="col-6">
+                <label for="startDate">Start Date:</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="startDate"
+                  placeholder="dd-mm-yyyy"
+                  [(ngModel)]="DateInput2.startDate"
+                />
+              </div>
+              <div class="col-6">
+                <label for="endDate">End Date:</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="endDate"
+                  placeholder="dd-mm-yyyy"
+                  [(ngModel)]="DateInput2.endDate"
+                />
+              </div>
+              <div class="d-flex mt-3 align-items-center">
+                <div class="form-check col-3">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    [(ngModel)]="FileType"
+                    value="PDF"
+                    name="flexRadioDefault"
+                    id="flexRadioDefault1"
+                    [checked]="FileType === 'PDF'"
+                  />
+                  <label class="form-check-label" for="flexRadioDefault1">
+                    PDF
+                  </label>
+                </div>
+                <div class="form-check col-3">
+                  <input
+                    class="form-check-input"
+                    value="XLS"
+                    [(ngModel)]="FileType"
+                    type="radio"
+                    name="flexRadioDefault"
+                    id="flexRadioDefault2"
+                  />
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Excel
+                  </label>
+                </div>
+                <button
+                  class="btn btn-sm btn-primary ms-5"
+                  (click)="No_Of_Rides_In_a_Duration(DateInput2)"
+                >
+                  Get Report
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6">
+          <div class="Chart p-4">
+            <h5>No of canceled rides in a duration</h5>
+            <hr class="homeTable-divider" />
+            <div class="row g-2 p-4">
+              <div class="col-6">
+                <label for="startDate">Start Date:</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="startDate1"
+                  placeholder="dd-mm-yyyy"
+                  [(ngModel)]="DateInput1.startDate"
+                />
+              </div>
+              <div class="col-6">
+                <label for="endDate">End Date:</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="endDate1"
+                  placeholder="dd-mm-yyyy"
+                  [(ngModel)]="DateInput1.endDate"
+                />
+              </div>
+              <div class="d-flex mt-3 align-items-center">
+                <div class="form-check col-3">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    [(ngModel)]="CancelFileType"
+                    value="PDF"
+                    name="flexRadioDefault1"
+                    id="flexRadioDefault11"
+                    [checked]="CancelFileType === 'PDF'"
+                  />
+                  <label class="form-check-label" for="flexRadioDefault1">
+                    PDF
+                  </label>
+                </div>
+                <div class="form-check col-3">
+                  <input
+                    class="form-check-input"
+                    value="XLS"
+                    [(ngModel)]="CancelFileType"
+                    type="radio"
+                    name="flexRadioDefault1"
+                    id="flexRadioDefault21"
+                  />
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Excel
+                  </label>
+                </div>
+                <button
+                  class="btn btn-sm btn-primary ms-5"
+                  (click)="No_of_cancelled_rides_in_a_duration(DateInput1)"
+                >
+                  Get Report
+                </button>
+              </div>
+
+              <!-- </div> -->
+            </div>
+          </div>
+        </div>
+
+        <hr class="m-0" />
+
+        <div class="col-12 px-0">
+          <div class="Chart px-0">
+            <div class="justify-content-between d-flex is-align-items-center">
+              <div class="d-flex align-items-center">
+                <h5 class="mb-0">Best rated drivers List</h5>
+              </div>
+              <div class="d-flex gap-2">
+                <button
+                  class="btn btn-primary d-block"
+                  (click)="BestRatedDriverListXLS()"
+                >
+                  <i class="bi bi-file-excel-fill"></i>
+                </button>
+                <button
+                  class="btn btn-primary d-block"
+                  (click)="BestRatedDriverListPDF()"
+                >
+                  <i class="bi bi-file-pdf-fill"></i>
+                </button>
+              </div>
+            </div>
+            <hr class="homeTable-divider" />
+            <table class="table table-bordered table-hover table-striped">
+              <thead style="background-color: #343a40; color: white">
+                <tr>
+                  <th scope="col">Rider Id</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Mobile No.</th>
+                  <th scope="col">City</th>
+                  <th scope="col">Rating</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let driverRatings of BestRatingsInfo
+                      | paginate : { itemsPerPage: 5, currentPage: p }
+                  "
+                >
+                  <td>{{ driverRatings.best_rated_rider_id }}</td>
+                  <td>{{ driverRatings.best_rated_rider_name }}</td>
+                  <td>{{ driverRatings.best_rated_rider_mobile }}</td>
+                  <td>{{ driverRatings.currentcity }}</td>
+                  <td
+                    [innerHTML]="
+                      getStarRating(driverRatings.best_rated_rider_rating)
+                    "
+                  ></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Cancelled ride distribution city wise in a duration Modal -->
+<div
+  class="modal fade"
+  id="CRModal"
+  tabindex="-1"
+  aria-labelledby="CRModalLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="CRModalLabel">
+          Cancelled ride distribution city wise in a duration.
+        </h1>
+      </div>
+
+      <div class="modal-body">
+        <table class="table table-bordered table-hover">
+          <thead style="background-color: #343a40; color: white">
+            <tr>
+              <th>ID</th>
+              <th>City</th>
+              <th>Cancelled Ride Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let item of cancelRideD
+                  | paginate : { itemsPerPage: 5, currentPage: p };
+                let i = index
+              "
+            >
+              <td>{{ i + 1 }}</td>
+              <td>{{ item.currentcity }}</td>
+              <td>{{ item.cancelled_ride_count }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Add Vehicle Modal -->
+<div
+  #AddVehicleModal
+  class="modal fade"
+  id="ADDModal"
+  tabindex="-1"
+  aria-labelledby="ADDModalLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="ADDModalLabel">Add Vehicle</h1>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="VehicleCategory" class="form-label"
+                >Vehicle Category</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="VehicleCategory"
+                placeholder="Enter Vehicle Category"
+                [(ngModel)]="vehicleCategory"
+                name="vehicleCategory"
+              />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="Vechicletype" class="form-label">Vechicle type</label>
+              <input
+                type="text"
+                class="form-control"
+                id="Vechicletype"
+                placeholder="Enter Vechicle type"
+                [(ngModel)]="vehicleType"
+                name="vehicleType"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+        type="button"
+        class="btn btn-primary"
+        data-bs-dismiss="modal"
+        (click)="AddVehicle()"
+      >
+        Save
+      </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Edit Vehicle Modal -->
+<div
+  #EditVehicleModal
+  class="modal fade"
+  id="EditModal"
+  tabindex="-1"
+  aria-labelledby="EditModalLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="EditModalLabel">Edit Vehicle</h1>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="VehicleCategory" class="form-label"
+                >Vehicle Category</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="VehicleCategory"
+                placeholder="Enter Vehicle Category"
+                [(ngModel)]="this.EditRow.category"
+                name="vehicleCategory"
+              />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="Vechicletype" class="form-label">Vechicle type</label>
+              <input
+                type="text"
+                class="form-control"
+                id="Vechicletype"
+                placeholder="Enter Vechicle type"
+                [(ngModel)]="this.EditRow.type"
+                name="vehicleType"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="EditVehicleData()"
+        >
+          Save
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Delete Vehicle Modal -->
+<div
+  #DeleteVehicleModal
+  class="modal fade"
+  id="DeleteModal"
+  tabindex="-1"
+  aria-labelledby="DeleteModalLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="DeleteModalLabel">Confirmation</h1>
+      </div>
+      <div class="modal-body">
+        <h4>Are You Sure ?</h4>
+        <h6>You won't be able to revert this.</h6>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-danger"
+          data-bs-dismiss="modal"
+          (click)="DeleteVehicleData()"
+        >
+          Yes,Delete
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+      </div>
     </div>
   </div>
 </div>
