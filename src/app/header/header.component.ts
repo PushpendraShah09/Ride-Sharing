@@ -172,7 +172,7 @@ export class HeaderComponent implements OnInit {
         position: 'top-end',
         icon: 'error',
         toast: true,
-        title: `The following fields are invalid: ${emptyFields.join(' | ')}`,
+        title: `The following fields are invalid : ${emptyFields.join(' | ')}`,
         showConfirmButton: false,
         timer: 2000,
       });
